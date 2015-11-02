@@ -7,8 +7,8 @@
     <ProjectGuid>{4DABD61B-7BCC-426A-9B6D-0AF59E1DBC35}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AppSettings</RootNamespace>
-    <AssemblyName>AppSettings</AssemblyName>
+    <RootNamespace>Mash.AppSettings</RootNamespace>
+    <AssemblyName>Mash.AppSettings</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

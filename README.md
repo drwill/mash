@@ -1,2 +1,4 @@
 # mash
-.NET software we kept writing over and over
+.NET software we want to reuse no matter where we're programming
+
+[AppSettings loader](/AppSettings/)

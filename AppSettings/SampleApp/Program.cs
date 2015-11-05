@@ -12,7 +12,7 @@ namespace SampleApp
                 Factory.GetAppConfigSettingLoader(),
                 ref settings);
 
-            PrintHelper.PrintPropertyValuesToConsole(settings);
+            SettingsHelper.PrintPropertyValuesToConsole(settings);
         }
     }
 }

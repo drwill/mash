@@ -1,13 +1,16 @@
 ﻿using AppSettings;
-using System;
+using SampleWebApp.Models;
+using System.Collections.Generic;
 using System.Reflection;
 
-namespace SampleApp
+namespace SampleWebApp
 {
-    internal static class SettingsHelper
+    internal class SettingsHelper
     {
-        public static void PrintPropertyValuesToConsole(Settings settings)
+        public static Dictionary<string, string> GetPropertyValues(Settings settings)
         {
+            var dictionary = new Dictionary<string, string>();
+
             var members = typeof(Settings).FindMembers(
                 MemberTypes.Property,
                 BindingFlags.Instance | BindingFlags.Public,
@@ -19,12 +22,14 @@ namespace SampleApp
                 if (member == null ||
                     member.GetValue(settings) == null)
                 {
-                    Console.WriteLine($"[{member.Name}] is [null]");
+                    dictionary.Add(member.Name, null);
                     continue;
                 }
 
-                Console.WriteLine($"Setting [{member.Name}] is [{member.GetValue(settings)}]");
+                dictionary.Add(member.Name, member.GetValue(settings).ToString());
             }
+
+            return dictionary;
         }
 
         private static bool HasAttribute(MemberInfo mi, object o)

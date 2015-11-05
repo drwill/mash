@@ -46,7 +46,8 @@ namespace AppSettings
                 string settingName = member.Name;
 
                 var attr = member.GetCustomAttribute<AppSettingAttribute>();
-                if (attr.Key != null)
+                if (attr != null &&
+                    attr.Key != null)
                 {
                     settingName = attr.Key;
                 }
@@ -90,6 +91,11 @@ namespace AppSettings
 
         private static bool HasAttribute(MemberInfo mi, object o)
         {
+            if (mi.DeclaringType.GetCustomAttribute<AppSettingAttribute>() != null)
+            {
+                return true;
+            }
+
             return mi.GetCustomAttribute<AppSettingAttribute>() != null;
         }
     }

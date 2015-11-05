@@ -5,7 +5,10 @@ namespace AppSettings
     /// <summary>
     /// A code attribute for decorating a settings class' properties
     /// </summary>
-    [AttributeUsage(AttributeTargets.Property)]
+    /// <remarks>
+    /// As a convenience to avoid decorating each property, you may choose to attribte the class which will opt in all class public properties.
+    /// </remarks>
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Class)]
     public sealed class AppSettingAttribute : Attribute
     {
         /// <summary>

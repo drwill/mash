@@ -1,4 +1,4 @@
-﻿using AppSettings;
+﻿using Mash.AppSettings;
 using SampleWebApp.Models;
 using System.Collections.Generic;
 using System.Reflection;

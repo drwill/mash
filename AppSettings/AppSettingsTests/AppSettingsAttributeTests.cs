@@ -1,8 +1,7 @@
-﻿using System.Linq;
-using AppSettings;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
-namespace AppSettingsTests
+namespace Mash.AppSettings.Tests
 {
     [TestClass]
     public class AppSettingsAttributeTests

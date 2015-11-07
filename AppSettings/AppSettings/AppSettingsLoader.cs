@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 
-namespace AppSettings
+namespace Mash.AppSettings
 {
     /// <summary>
     /// Loads application settings into your own custom data class

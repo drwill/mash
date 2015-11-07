@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Configuration;
 
-namespace AppSettings
+namespace Mash.AppSettings
 {
     /// <summary>
     /// Loads the requested setting from the app configiguration file

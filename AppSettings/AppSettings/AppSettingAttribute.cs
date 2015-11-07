@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AppSettings
+namespace Mash.AppSettings
 {
     /// <summary>
     /// A code attribute for decorating a settings class' properties

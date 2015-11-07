@@ -1,4 +1,4 @@
-﻿using AppSettings;
+﻿using Mash.AppSettings;
 using SampleWebApp.Models;
 using System.Web.Mvc;
 

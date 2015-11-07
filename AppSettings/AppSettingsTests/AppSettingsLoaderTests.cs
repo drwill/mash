@@ -1,8 +1,7 @@
-﻿using AppSettings;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace AppSettingsTests
+namespace Mash.AppSettings.Tests
 {
     [TestClass]
     public class AppSettingsLoaderTests

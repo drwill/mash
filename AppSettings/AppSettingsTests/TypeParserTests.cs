@@ -1,7 +1,6 @@
-﻿using AppSettings;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace AppSettingsTests
+namespace Mash.AppSettings.Tests
 {
     [TestClass]
     public class TypeParserTests

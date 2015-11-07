@@ -1,4 +1,4 @@
-﻿namespace AppSettings
+﻿namespace Mash.AppSettings
 {
     /// <summary>
     /// A provider to load a setting

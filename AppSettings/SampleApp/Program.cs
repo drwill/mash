@@ -1,4 +1,4 @@
-﻿using AppSettings;
+﻿using Mash.AppSettings;
 
 namespace SampleApp
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace AppSettings
+namespace Mash.AppSettings
 {
     /// <summary>
     /// Converts a string value to a specified type

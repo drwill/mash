@@ -1,8 +1,6 @@
-﻿using AppSettings;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace AppSettingsTests
+namespace Mash.AppSettings.Tests
 {
     internal class SettingLoaderMock : ISettingLoader
     {

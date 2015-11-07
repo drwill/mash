@@ -29,6 +29,11 @@ namespace SampleApp
 
         private static bool HasAttribute(MemberInfo mi, object o)
         {
+            if (mi.DeclaringType.GetCustomAttribute<AppSettingAttribute>() != null)
+            {
+                return true;
+            }
+
             return mi.GetCustomAttribute<AppSettingAttribute>() != null;
         }
     }

@@ -122,6 +122,30 @@ namespace AppSettingsTests
             Assert.IsTrue(exceptionCaught, "An exception was not thrown");
         }
 
+        [TestMethod]
+        public void AppSettingsLoader_Load_LoadsUndecoratedPropertyWhenClassIsDecorated()
+        {
+            var mockSettingsLoader = new SettingLoaderMock();
+            mockSettingsLoader.Settings.Add("Is42", "42");
+
+            var settings2 = new Settings2();
+
+            Assert.IsTrue(AppSettingsLoader.Load(mockSettingsLoader, ref settings2), "Load returned false");
+            Assert.AreEqual(42, settings2.Is42, "Int setting not set");
+        }
+
+        [TestMethod]
+        public void AppSettingsLoader_Load_UsesKeyOverride()
+        {
+            var mockSettingsLoader = new SettingLoaderMock();
+            mockSettingsLoader.Settings.Add("IsFooBar", "Foobar");
+
+            var settings2 = new Settings2();
+
+            Assert.IsTrue(AppSettingsLoader.Load(mockSettingsLoader, ref settings2), "Load returned false");
+            Assert.AreEqual("Foobar", settings2.IsFoo, "String setting not set");
+        }
+
         private class Settings
         {
             [AppSetting]
@@ -141,6 +165,15 @@ namespace AppSettingsTests
 
             [AppSetting]
             public Option IsOption2 { get; set; }
+        }
+
+        [AppSetting]
+        private class Settings2
+        {
+            public int Is42 { get; set; }
+
+            [AppSetting(Key = "IsFooBar")]
+            public string IsFoo { get; set; }
         }
 
         private enum Option

@@ -9,12 +9,15 @@ namespace Mash.AppSettings.Tests
         /// </summary>
         public IDictionary<string, string> Settings { get; private set; }
 
+        public IDictionary<string, string> ConnectionStrings { get; private set; }
+
         public SettingLoaderMock()
         {
             Settings = new Dictionary<string, string>();
+            ConnectionStrings = new Dictionary<string, string>();
         }
 
-        public string Load(string settingName)
+        public string GetSetting(string settingName)
         {
             if (!Settings.ContainsKey(settingName))
             {
@@ -22,6 +25,11 @@ namespace Mash.AppSettings.Tests
             }
 
             return Settings[settingName];
+        }
+
+        public IDictionary<string, string> GetConnectionStrings()
+        {
+            return ConnectionStrings;
         }
     }
 }

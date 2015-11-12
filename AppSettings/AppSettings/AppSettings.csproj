@@ -44,6 +44,7 @@
     <Compile Include="AppConfigSettingLoader.cs" />
     <Compile Include="AppSettingAttribute.cs" />
     <Compile Include="AppSettingsLoader.cs" />
+    <Compile Include="ConnectionStringAttribute.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="ISettingLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

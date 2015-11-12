@@ -1,5 +1,6 @@
 ﻿using Mash.AppSettings;
 using System;
+using System.Collections.Generic;
 
 namespace SampleApp
 {
@@ -29,6 +30,9 @@ namespace SampleApp
         public EnumValues EnumSetting { get; set; }
 
         public EnumValues EnumSettingInt { get; set; }
+
+        [ConnectionString]
+        public IDictionary<string, string> ConnectionStrings { get; set; }
     }
 
     internal enum EnumValues

@@ -1,4 +1,6 @@
-﻿namespace Mash.AppSettings
+﻿using System.Collections.Generic;
+
+namespace Mash.AppSettings
 {
     /// <summary>
     /// A provider to load a setting
@@ -10,6 +12,14 @@
         /// </summary>
         /// <param name="settingKey">The key of the setting to load</param>
         /// <returns>The value</returns>
-        string Load(string settingKey);
+        string GetSetting(string settingKey);
+
+        /// <summary>
+        /// Loads all connection strings from the source
+        /// </summary>
+        /// <returns>
+        /// A dictionary of connection strings where key is the name and the value is the connection string
+        /// </returns>
+        IDictionary<string, string> GetConnectionStrings();
     }
 }

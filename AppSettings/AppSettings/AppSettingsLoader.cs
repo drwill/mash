@@ -62,7 +62,6 @@ namespace Mash.AppSettings
 
                 try
                 {
-                    var propertyType = member.PropertyType;
 
                     if (IsValidConnectionStringProperty(member))
                     {
@@ -107,8 +106,8 @@ namespace Mash.AppSettings
                 propertyType.GetGenericArguments()[0] == typeof(string) &&
                 propertyType.GetGenericArguments()[1] == typeof(string))
             {
-                return true;
-            }
+            return true;
+        }
 
             return false;
         }

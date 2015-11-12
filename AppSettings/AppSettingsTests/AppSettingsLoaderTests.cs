@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 
 namespace Mash.AppSettings.Tests
 {
@@ -99,6 +100,36 @@ namespace Mash.AppSettings.Tests
         }
 
         [TestMethod]
+        public void AppSetingsLoader_Load_LoadsConnectionStringsWhenClassIsDecoratedSeparately()
+        {
+            var connectionStringName = "Name";
+            var connectionStringValue = "Value";
+            var mockSettingLoader = new SettingLoaderMock();
+
+            mockSettingLoader.ConnectionStrings.Add(connectionStringName, connectionStringValue);
+
+            var settings = new Settings2();
+
+            Assert.IsTrue(AppSettingsLoader.Load(mockSettingLoader, ref settings), "Load returned flase");
+            Assert.IsTrue(settings.ConnectionStrings.Contains(new KeyValuePair<string, string>(connectionStringName, connectionStringValue)));
+        }
+
+        [TestMethod]
+        public void AppSetingsLoader_Load_LoadsConnectionStringsWhenPropertyIsDecoratedWithConnectionString()
+        {
+            var connectionStringName = "Name";
+            var connectionStringValue = "Value";
+            var mockSettingLoader = new SettingLoaderMock();
+
+            mockSettingLoader.ConnectionStrings.Add(connectionStringName, connectionStringValue);
+
+            var settings = new Settings();
+
+            Assert.IsTrue(AppSettingsLoader.Load(mockSettingLoader, ref settings), "Load returned flase");
+            Assert.IsTrue(settings.ConnectionStrings.Contains(new KeyValuePair<string, string>(connectionStringName, connectionStringValue)));
+        }
+
+        [TestMethod]
         public void AppSettingsLoader_Load_ExceptionOnFailToParse()
         {
             var mockSettingsLoader = new SettingLoaderMock();
@@ -164,6 +195,10 @@ namespace Mash.AppSettings.Tests
 
             [AppSetting]
             public Option IsOption2 { get; set; }
+
+            [AppSetting]
+            [ConnectionString]
+            public IDictionary<string, string> ConnectionStrings { get; set; }
         }
 
         [AppSetting]
@@ -173,6 +208,9 @@ namespace Mash.AppSettings.Tests
 
             [AppSetting(Key = "IsFooBar")]
             public string IsFoo { get; set; }
+            
+            [ConnectionString]
+            public IDictionary<string, string> ConnectionStrings { get; set; }
         }
 
         private enum Option

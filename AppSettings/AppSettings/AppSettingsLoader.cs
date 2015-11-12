@@ -62,7 +62,18 @@ namespace Mash.AppSettings
 
                 try
                 {
-                    var loadedValue = settingLoader.Load(settingName);
+                    var propertyType = member.PropertyType;
+
+                    if (member.GetCustomAttribute<ConnectionStringAttribute>() != null &&
+                        propertyType.GetGenericTypeDefinition() == typeof(IDictionary<,>) &&
+                        propertyType.GetGenericArguments()[0] == typeof(string) &&
+                        propertyType.GetGenericArguments()[1] == typeof(string))
+                    {
+                        member.SetValue(settingsClass, settingLoader.GetConnectionStrings());
+                        continue;
+                    }
+
+                    var loadedValue = settingLoader.GetSetting(settingName);
                     if (String.IsNullOrEmpty(loadedValue))
                     {
                         Trace.TraceWarning($"No value found for {settingName}");

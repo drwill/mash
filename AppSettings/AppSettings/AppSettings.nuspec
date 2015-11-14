@@ -11,11 +11,11 @@
     <iconUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Simple_cog.svg/120px-Simple_cog.svg.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Added support for class decoration to encompass all public properties. Added sample web app.</releaseNotes>
+    <releaseNotes>Published a version targeting .NET 4.5.1.</releaseNotes>
     <copyright>Copyright 2015</copyright>
     <tags>application settings loader app.config</tags>
   </metadata>
   <files>
-    <file src="bin\$configuration$\$id$.pdb" target="lib\net452\" />
+    <file src="bin\$configuration$\$id$.pdb" target="lib\net451\" />
   </files>
 </package>

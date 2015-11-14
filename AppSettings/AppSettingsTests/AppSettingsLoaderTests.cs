@@ -100,21 +100,6 @@ namespace Mash.AppSettings.Tests
         }
 
         [TestMethod]
-        public void AppSetingsLoader_Load_LoadsConnectionStringsWhenClassIsDecoratedSeparately()
-        {
-            var connectionStringName = "Name";
-            var connectionStringValue = "Value";
-            var mockSettingLoader = new SettingLoaderMock();
-
-            mockSettingLoader.ConnectionStrings.Add(connectionStringName, connectionStringValue);
-
-            var settings = new Settings2();
-
-            Assert.IsTrue(AppSettingsLoader.Load(mockSettingLoader, ref settings), "Load returned flase");
-            Assert.IsTrue(settings.ConnectionStrings.Contains(new KeyValuePair<string, string>(connectionStringName, connectionStringValue)));
-        }
-
-        [TestMethod]
         public void AppSetingsLoader_Load_LoadsConnectionStringsWhenPropertyIsDecoratedWithConnectionString()
         {
             var connectionStringName = "Name";
@@ -196,8 +181,7 @@ namespace Mash.AppSettings.Tests
             [AppSetting]
             public Option IsOption2 { get; set; }
 
-            [AppSetting]
-            [ConnectionString]
+            [AppSetting(IsConnectionStrings = true)]
             public IDictionary<string, string> ConnectionStrings { get; set; }
         }
 
@@ -209,7 +193,7 @@ namespace Mash.AppSettings.Tests
             [AppSetting(Key = "IsFooBar")]
             public string IsFoo { get; set; }
             
-            [ConnectionString]
+            [AppSetting(IsConnectionStrings = true)]
             public IDictionary<string, string> ConnectionStrings { get; set; }
         }
 

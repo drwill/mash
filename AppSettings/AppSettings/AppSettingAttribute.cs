@@ -18,5 +18,7 @@ namespace Mash.AppSettings
         /// Use this if you wish to use a name other than the attributed property for loading the target feature control key
         /// </remarks>
         public string Key { get; set; }
+
+        public bool IsConnectionStrings { get; set; }
     }
 }

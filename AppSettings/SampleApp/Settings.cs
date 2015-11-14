@@ -31,7 +31,7 @@ namespace SampleApp
 
         public EnumValues EnumSettingInt { get; set; }
 
-        [ConnectionString]
+        [AppSetting(IsConnectionStrings = true)]
         public IDictionary<string, string> ConnectionStrings { get; set; }
     }
 

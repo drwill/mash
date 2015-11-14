@@ -109,6 +109,19 @@ namespace Mash.AppSettings
             return true;
         }
 
+        private static bool IsValidConnectionStringProperty(PropertyInfo member)
+        {
+            var propertyType = member.PropertyType;
+
+            if (member.GetCustomAttribute<AppSettingAttribute>() != null &&
+                member.GetCustomAttribute<AppSettingAttribute>().IsConnectionStrings &&
+                propertyType.GetGenericTypeDefinition() == typeof(IDictionary<,>) &&
+                propertyType.GetGenericArguments()[0] == typeof(string) &&
+                propertyType.GetGenericArguments()[1] == typeof(string))
+            {
+                return true;
+            }
+
             return false;
         }
 

@@ -1,10 +1,10 @@
-﻿using AppSettings;
+﻿using Mash.AppSettings;
 using System;
 using System.Reflection;
 
 namespace SampleApp
 {
-    internal static class PrintHelper
+    internal static class SettingsHelper
     {
         public static void PrintPropertyValuesToConsole(Settings settings)
         {
@@ -29,6 +29,11 @@ namespace SampleApp
 
         private static bool HasAttribute(MemberInfo mi, object o)
         {
+            if (mi.DeclaringType.GetCustomAttribute<AppSettingAttribute>() != null)
+            {
+                return true;
+            }
+
             return mi.GetCustomAttribute<AppSettingAttribute>() != null;
         }
     }

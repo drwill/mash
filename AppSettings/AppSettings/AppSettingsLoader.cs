@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 
-namespace AppSettings
+namespace Mash.AppSettings
 {
     /// <summary>
     /// Loads application settings into your own custom data class
@@ -46,7 +46,8 @@ namespace AppSettings
                 string settingName = member.Name;
 
                 var attr = member.GetCustomAttribute<AppSettingAttribute>();
-                if (attr.Key != null)
+                if (attr != null &&
+                    attr.Key != null)
                 {
                     settingName = attr.Key;
                 }
@@ -61,7 +62,13 @@ namespace AppSettings
 
                 try
                 {
-                    var loadedValue = settingLoader.Load(settingName);
+                    if (IsValidConnectionStringProperty(member))
+                    {
+                        member.SetValue(settingsClass, settingLoader.GetConnectionStrings());
+                        continue;
+                    }
+
+                    var loadedValue = settingLoader.GetSetting(settingName);
                     if (String.IsNullOrEmpty(loadedValue))
                     {
                         Trace.TraceWarning($"No value found for {settingName}");
@@ -88,8 +95,29 @@ namespace AppSettings
             return true;
         }
 
+        private static bool IsValidConnectionStringProperty(PropertyInfo member)
+        {
+            var propertyType = member.PropertyType;
+
+            if (member.GetCustomAttribute<AppSettingAttribute>() != null &&
+                member.GetCustomAttribute<AppSettingAttribute>().IsConnectionString &&
+                propertyType.GetGenericTypeDefinition() == typeof(IReadOnlyDictionary<,>) &&
+                propertyType.GetGenericArguments()[0] == typeof(string) &&
+                propertyType.GetGenericArguments()[1] == typeof(string))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         private static bool HasAttribute(MemberInfo mi, object o)
         {
+            if (mi.DeclaringType.GetCustomAttribute<AppSettingAttribute>() != null)
+            {
+                return true;
+            }
+
             return mi.GetCustomAttribute<AppSettingAttribute>() != null;
         }
     }

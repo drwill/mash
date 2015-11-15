@@ -1,8 +1,7 @@
-﻿using System.Linq;
-using AppSettings;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
-namespace AppSettingsTests
+namespace Mash.AppSettings.Tests
 {
     [TestClass]
     public class AppSettingsAttributeTests
@@ -11,9 +10,9 @@ namespace AppSettingsTests
         public void AppSettingsAttribute_Specified()
         {
             string propertyName = "Override";
-            string attributeMemberName = "Name";
+            string attributeMemberName = "Key";
 
-            var nameArgument = GetName(propertyName, attributeMemberName);
+            var nameArgument = GetKey(propertyName, attributeMemberName);
 
             Assert.AreEqual("Overriden", nameArgument);
         }
@@ -24,19 +23,19 @@ namespace AppSettingsTests
             string propertyName = "Default";
             string attributeMemberName = "Name";
 
-            var nameArgument = GetName(propertyName, attributeMemberName);
+            var nameArgument = GetKey(propertyName, attributeMemberName);
 
             Assert.IsNull(nameArgument);
         }
 
-        private static string GetName(string propertyName, string attributeMemberName)
+        private static string GetKey(string propertyName, string attributeMemberName)
         {
             var test = new TestSettings();
             var defaultProperty = test.GetType().GetProperty(propertyName);
-            var fckAttribute = defaultProperty.CustomAttributes
+            var appSettingAttribute = defaultProperty.CustomAttributes
                 .Where(a => a.AttributeType == typeof(AppSettingAttribute))
                 .FirstOrDefault();
-            var nameArgument = fckAttribute.NamedArguments
+            var nameArgument = appSettingAttribute.NamedArguments
                 .Where(arg => arg.MemberName == attributeMemberName)
                 .FirstOrDefault();
 

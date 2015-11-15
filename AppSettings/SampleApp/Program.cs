@@ -1,4 +1,4 @@
-﻿using AppSettings;
+﻿using Mash.AppSettings;
 
 namespace SampleApp
 {
@@ -12,7 +12,7 @@ namespace SampleApp
                 Factory.GetAppConfigSettingLoader(),
                 ref settings);
 
-            PrintHelper.PrintPropertyValuesToConsole(settings);
+            SettingsHelper.PrintPropertyValuesToConsole(settings);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace AppSettings
+namespace Mash.AppSettings
 {
     internal class TypeHelper
     {

@@ -1,4 +1,4 @@
-﻿namespace AppSettings
+﻿namespace Mash.AppSettings
 {
     /// <summary>
     /// Public factory for AppSettings objects

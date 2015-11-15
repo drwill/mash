@@ -105,8 +105,8 @@ namespace Mash.AppSettings
                 propertyType.GetGenericArguments()[0] == typeof(string) &&
                 propertyType.GetGenericArguments()[1] == typeof(string))
             {
-                return true;
-            }
+            return true;
+        }
 
             return false;
         }

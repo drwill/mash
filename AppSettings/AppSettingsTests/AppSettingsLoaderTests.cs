@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 
 namespace Mash.AppSettings.Tests
 {
@@ -99,6 +100,21 @@ namespace Mash.AppSettings.Tests
         }
 
         [TestMethod]
+        public void AppSetingsLoader_Load_LoadsConnectionStringsWhenPropertyIsDecoratedWithConnectionString()
+        {
+            var connectionStringName = "Name";
+            var connectionStringValue = "Value";
+            var mockSettingLoader = new SettingLoaderMock();
+
+            mockSettingLoader.ConnectionStrings.Add(connectionStringName, connectionStringValue);
+
+            var settings = new Settings();
+
+            Assert.IsTrue(AppSettingsLoader.Load(mockSettingLoader, ref settings), "Load returned flase");
+            Assert.IsTrue(settings.ConnectionStrings.ContainsKey(connectionStringName));
+        }
+
+        [TestMethod]
         public void AppSettingsLoader_Load_ExceptionOnFailToParse()
         {
             var mockSettingsLoader = new SettingLoaderMock();
@@ -164,6 +180,9 @@ namespace Mash.AppSettings.Tests
 
             [AppSetting]
             public Option IsOption2 { get; set; }
+
+            [AppSetting(IsConnectionString = true)]
+            public IReadOnlyDictionary<string, string> ConnectionStrings { get; set; }
         }
 
         [AppSetting]
@@ -173,6 +192,9 @@ namespace Mash.AppSettings.Tests
 
             [AppSetting(Key = "IsFooBar")]
             public string IsFoo { get; set; }
+            
+            [AppSetting(IsConnectionString = true)]
+            public IReadOnlyDictionary<string, string> ConnectionStrings { get; set; }
         }
 
         private enum Option

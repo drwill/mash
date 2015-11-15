@@ -29,9 +29,15 @@ Your settings file will look something like this:
 
     [AppSetting(Key = "StringSettingOverride")]
     public string OverridenSetting { get; set; }
+
+	[AppSetting(IsConnectionString = true)]
+    public IReadOnlyDictionary<string, string> ConnectionStrings { get; set; }
 }</code></pre>
 
 Or if you want to opt-in all public properties, you can just decorate the class with the AppSetting attribute.
+
+You can use the AppSetting "IsConnectionString" attribute boolean property and define an IReadOnlyDictionary property in the settings class that will be loaded with all connection strings.
+In the dictionary, the key will hold the connection string's name, and the value will be connection string.
 
 ## App.Config
 Included is support for loading settings from your app.config file.

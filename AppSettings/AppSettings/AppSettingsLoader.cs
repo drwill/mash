@@ -62,21 +62,34 @@ namespace Mash.AppSettings
 
                 try
                 {
-                    if (IsValidConnectionStringProperty(member))
+                    if (IsValidConnectionStringDictionary(member))
                     {
                         member.SetValue(settingsClass, settingLoader.GetConnectionStrings());
                         continue;
                     }
 
-                    var loadedValue = settingLoader.GetSetting(settingName);
-                    if (String.IsNullOrEmpty(loadedValue))
+                    if (IsConnectionStringSettingType(member))
                     {
-                        Trace.TraceWarning($"No value found for {settingName}");
+                        var loadedConnectionString = settingLoader.GetConnectionString(settingName);
+                        if (!CheckIfSettingIsValid(loadedConnectionString, settingName))
+                        {
+                            continue;
+                        }
+
+                        var parsedConnectionString = TypeParser.GetTypedValue(member.PropertyType, loadedConnectionString);
+                        member.SetValue(settingsClass, parsedConnectionString);
+
                         continue;
                     }
 
-                    var parsedValue = TypeParser.GetTypedValue(member.PropertyType, loadedValue);
-                    member.SetValue(settingsClass, parsedValue);
+                    var loadedSetting = settingLoader.GetSetting(settingName);
+                    if (!CheckIfSettingIsValid(loadedSetting, settingName))
+                    {
+                        continue;
+                    }
+
+                    var parsedSetting = TypeParser.GetTypedValue(member.PropertyType, loadedSetting);
+                    member.SetValue(settingsClass, parsedSetting);
                 }
                 catch (Exception ex)
                 {
@@ -95,20 +108,6 @@ namespace Mash.AppSettings
             return true;
         }
 
-        private static bool IsValidConnectionStringProperty(PropertyInfo member)
-        {
-            var customAttribute = member.GetCustomAttribute<AppSettingAttribute>();
-
-            if (customAttribute != null &&
-                customAttribute.SettingType == SettingType.Connectionstring &&
-                member.PropertyType == typeof(IReadOnlyDictionary<string, string>))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
         private static bool HasAttribute(MemberInfo mi, object o)
         {
             if (mi.DeclaringType.GetCustomAttribute<AppSettingAttribute>() != null)
@@ -117,6 +116,43 @@ namespace Mash.AppSettings
             }
 
             return mi.GetCustomAttribute<AppSettingAttribute>() != null;
+        }
+
+        private static bool IsConnectionStringSettingType(PropertyInfo member)
+        {
+            var customAttribute = member.GetCustomAttribute<AppSettingAttribute>();
+
+            if (customAttribute != null &&
+                customAttribute.SettingType == SettingType.Connectionstring)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool IsValidConnectionStringDictionary(PropertyInfo member)
+        {
+            var customAttribute = member.GetCustomAttribute<AppSettingAttribute>();
+
+            if (IsConnectionStringSettingType(member) &&
+                member.PropertyType == typeof(IReadOnlyDictionary<string, string>))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool CheckIfSettingIsValid(string loadedValue, string settingName)
+        {
+            if (String.IsNullOrEmpty(loadedValue))
+            {
+                Trace.TraceWarning($"No value found for {settingName}");
+                return false;
+            }
+
+            return true;
         }
     }
 }

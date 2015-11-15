@@ -15,6 +15,13 @@ namespace Mash.AppSettings
         string GetSetting(string settingKey);
 
         /// <summary>
+        /// Loads a connection string from the source
+        /// </summary>
+        /// <param name="connectionStringKey">The key of the connection string to load</param>
+        /// <returns>The connection string</returns>
+        string GetConnectionString(string connectionStringKey);
+
+        /// <summary>
         /// Loads all connection strings from the source
         /// </summary>
         /// <returns>

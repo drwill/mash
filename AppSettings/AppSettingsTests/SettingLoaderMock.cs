@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Mash.AppSettings.Tests
 {
@@ -25,6 +26,17 @@ namespace Mash.AppSettings.Tests
             }
 
             return Settings[settingName];
+        }
+
+        public string GetConnectionString(string connectionStringKey)
+        {
+
+            if (!ConnectionStrings.ContainsKey(connectionStringKey))
+            {
+                return null;
+            }
+
+            return ConnectionStrings[connectionStringKey];
         }
 
         public IDictionary<string, string> GetConnectionStrings()

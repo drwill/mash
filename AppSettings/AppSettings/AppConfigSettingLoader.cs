@@ -18,10 +18,25 @@ namespace Mash.AppSettings
         {
             if (String.IsNullOrWhiteSpace(settingKey))
             {
-                throw new ArgumentNullException("settingName", "The parameter cannot be null or empty");
+                throw new ArgumentNullException("settingName");
             }
 
             return ConfigurationManager.AppSettings[settingKey];
+        }
+
+        /// <summary>
+        /// Loads the specified connection string
+        /// </summary>
+        /// <param name="connectionStringKey">The key of the connection string to load</param>
+        /// <returns>The connection string value</returns>
+        public string GetConnectionString(string connectionStringKey)
+        {
+            if (String.IsNullOrWhiteSpace(connectionStringKey))
+            {
+                throw new ArgumentNullException("connectionStringKey");
+            }
+
+            return ConfigurationManager.ConnectionStrings[connectionStringKey].ConnectionString;
         }
 
         /// <summary>

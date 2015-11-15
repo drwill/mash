@@ -100,6 +100,21 @@ namespace Mash.AppSettings.Tests
         }
 
         [TestMethod]
+        public void AppSetingsLoader_Load_LoadsAConnectionString()
+        {
+            var connectionStringName = "SingleConnectionString";
+            var connectionStringValue = "ConnectionStringValue";
+            var mockSettingLoader = new SettingLoaderMock();
+
+            mockSettingLoader.ConnectionStrings.Add(connectionStringName, connectionStringValue);
+
+            var settings = new Settings();
+
+            Assert.IsTrue(AppSettingsLoader.Load(mockSettingLoader, ref settings), "Load returned flase");
+            Assert.AreEqual(connectionStringValue, settings.SingleConnectionString);
+        }
+
+        [TestMethod]
         public void AppSetingsLoader_Load_LoadsConnectionStringsWhenPropertyIsDecoratedWithConnectionString()
         {
             var connectionStringName = "Name";
@@ -183,6 +198,9 @@ namespace Mash.AppSettings.Tests
 
             [AppSetting(SettingType = SettingType.Connectionstring)]
             public IReadOnlyDictionary<string, string> ConnectionStrings { get; set; }
+
+            [AppSetting(SettingType = SettingType.Connectionstring)]
+            public string SingleConnectionString { get; set; }
         }
 
         [AppSetting]

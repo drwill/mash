@@ -32,7 +32,7 @@ namespace SampleApp
         public EnumValues EnumSettingInt { get; set; }
 
         [AppSetting(IsConnectionString = true)]
-        public IDictionary<string, string> ConnectionStrings { get; set; }
+        public IReadOnlyDictionary<string, string> ConnectionStrings { get; set; }
     }
 
     internal enum EnumValues

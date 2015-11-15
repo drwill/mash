@@ -111,7 +111,7 @@ namespace Mash.AppSettings.Tests
             var settings = new Settings();
 
             Assert.IsTrue(AppSettingsLoader.Load(mockSettingLoader, ref settings), "Load returned flase");
-            Assert.IsTrue(settings.ConnectionStrings.Contains(new KeyValuePair<string, string>(connectionStringName, connectionStringValue)));
+            Assert.IsTrue(settings.ConnectionStrings.ContainsKey(connectionStringName));
         }
 
         [TestMethod]
@@ -182,7 +182,7 @@ namespace Mash.AppSettings.Tests
             public Option IsOption2 { get; set; }
 
             [AppSetting(IsConnectionString = true)]
-            public IDictionary<string, string> ConnectionStrings { get; set; }
+            public IReadOnlyDictionary<string, string> ConnectionStrings { get; set; }
         }
 
         [AppSetting]
@@ -194,7 +194,7 @@ namespace Mash.AppSettings.Tests
             public string IsFoo { get; set; }
             
             [AppSetting(IsConnectionString = true)]
-            public IDictionary<string, string> ConnectionStrings { get; set; }
+            public IReadOnlyDictionary<string, string> ConnectionStrings { get; set; }
         }
 
         private enum Option

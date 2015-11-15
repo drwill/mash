@@ -19,6 +19,6 @@ namespace Mash.AppSettings
         /// </remarks>
         public string Key { get; set; }
 
-        public bool IsConnectionStrings { get; set; }
+        public bool IsConnectionString { get; set; }
     }
 }

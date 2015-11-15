@@ -181,7 +181,7 @@ namespace Mash.AppSettings.Tests
             [AppSetting]
             public Option IsOption2 { get; set; }
 
-            [AppSetting(IsConnectionString = true)]
+            [AppSetting(SettingType = SettingType.Connectionstring)]
             public IReadOnlyDictionary<string, string> ConnectionStrings { get; set; }
         }
 
@@ -193,7 +193,7 @@ namespace Mash.AppSettings.Tests
             [AppSetting(Key = "IsFooBar")]
             public string IsFoo { get; set; }
             
-            [AppSetting(IsConnectionString = true)]
+            [AppSetting(SettingType = SettingType.Connectionstring)]
             public IReadOnlyDictionary<string, string> ConnectionStrings { get; set; }
         }
 

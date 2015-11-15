@@ -31,7 +31,7 @@ namespace SampleApp
 
         public EnumValues EnumSettingInt { get; set; }
 
-        [AppSetting(IsConnectionString = true)]
+        [AppSetting(SettingType = SettingType.Connectionstring)]
         public IReadOnlyDictionary<string, string> ConnectionStrings { get; set; }
     }
 

@@ -23,10 +23,19 @@ namespace SampleWebApp
                     member.GetValue(settings) == null)
                 {
                     dictionary.Add(member.Name, null);
-                    continue;
                 }
-
-                dictionary.Add(member.Name, member.GetValue(settings).ToString());
+                else if (member.PropertyType == typeof(IReadOnlyDictionary<string, string>))
+                {
+                    dictionary.Add(member.Name, "Connection strings");
+                    foreach (var item in (IReadOnlyDictionary<string, string>)member.GetValue(settings))
+                    {
+                        dictionary.Add(item.Key, item.Value);
+                    }
+                }
+                else
+                {
+                    dictionary.Add(member.Name, member.GetValue(settings).ToString());
+                }
             }
 
             return dictionary;

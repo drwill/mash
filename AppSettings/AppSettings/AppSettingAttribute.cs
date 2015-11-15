@@ -20,11 +20,8 @@ namespace Mash.AppSettings
         public string Key { get; set; }
 
         /// <summary>
-        /// Connection string attribute flag
+        /// The type of setting to load
         /// </summary>
-        /// <remarks>
-        /// Use this if you wish to load the connection string(s) into your property.
-        /// </remarks>
-        public bool IsConnectionString { get; set; }
+        public SettingType SettingType { get; set; }
     }
 }

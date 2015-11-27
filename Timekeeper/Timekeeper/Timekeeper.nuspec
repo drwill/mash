@@ -2,9 +2,10 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>$version$</version>
+    <version>0.9.1-alpha</version>
+    <!--<version>$version$</version>-->
     <title>$title$</title>
-    <authors>MASH: Davvd R. Williamson, Azad Abbasi</authors>
+    <authors>MASH: David R. Williamson, Azad Abbasi</authors>
     <owners>MASH: David R. Williamson, Azad Abbasi</owners>
     <licenseUrl>https://github.com/drwill/mash/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/drwill/mash/tree/master/Timekeeper</projectUrl>

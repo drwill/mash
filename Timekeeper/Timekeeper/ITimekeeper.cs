@@ -5,12 +5,17 @@ namespace Mash.Timekeeper
     /// <summary>
     /// Keeps track of elapsed time, iteration count, max, and average time spent for a given operation
     /// </summary>
-    public interface ITimekeeper : ITimekeeperSnapshot
+    public interface ITimekeeper
     {
         /// <summary>
         /// Whether or not the timer is running
         /// </summary>
         bool IsRunning { get; }
+
+        /// <summary>
+        /// The statistics for the current interval
+        /// </summary>
+        TimekeeperSnapshot TimerStatistics { get; }
 
         /// <summary>
         /// Starts the time keeper
@@ -31,9 +36,9 @@ namespace Mash.Timekeeper
         void Capture(Action theAction);
 
         /// <summary>
-        /// Resets the timer statistics back to initial state
+        /// Takes a snapshot of the timer statistics and starts fresh for a new interval
         /// </summary>
         /// <returns>A snapshot of the time statistics</returns>
-        ITimekeeperSnapshot Reset();
+        TimekeeperSnapshot Snapshot();
     }
 }

@@ -17,18 +17,23 @@ namespace Mash.Timekeeper.SampleApp
             timekeeper.StartCapture();
             TheOperation();
             timekeeper.StopCapture();
-            PrintTimerStatistics(timekeeper);
+            PrintTimerStatistics(timekeeper.TimerStatistics);
 
             // Use Capture method
             timekeeper.Capture(() => { TheOperation(); });
-            PrintTimerStatistics(timekeeper);
+            PrintTimerStatistics(timekeeper.TimerStatistics);
 
             // Capture a bunch more times
             for (int i = 0; i < 50; ++i)
             {
                 timekeeper.Capture(TheOperation);
             }
-            PrintTimerStatistics(timekeeper);
+
+            var snapshot = timekeeper.Snapshot();
+            PrintTimerStatistics(snapshot);
+
+            Console.WriteLine("After reset, the new stats should be zeroes");
+            PrintTimerStatistics(timekeeper.TimerStatistics);
         }
 
         static void TheOperation()
@@ -40,14 +45,13 @@ namespace Mash.Timekeeper.SampleApp
             Thread.Sleep(randValue);
         }
 
-        static void PrintTimerStatistics(ITimekeeperSnapshot snapshot)
+        static void PrintTimerStatistics(TimekeeperSnapshot snapshot)
         {
-            Console.WriteLine(snapshot.Name);
+            Console.WriteLine($"{snapshot.Name} from {snapshot.CaptureStartUtc} to {snapshot.CaptureEndUtc}");
             Console.WriteLine($"\tCount: {snapshot.CaptureCount}");
-            Console.WriteLine($"\tTotal: {snapshot.TotalCaptureDuration}");
+            Console.WriteLine($"\tTotal: {snapshot.TotalCaptureSum}");
             Console.WriteLine($"\tMax: {snapshot.MaxCaptureDuration}");
             Console.WriteLine($"\tAverage: {snapshot.AverageCaptureDuration}");
-            Console.WriteLine($"\tLatest: {snapshot.LatestCaptureDuration}");
         }
 
         static readonly Random _rand = new Random();

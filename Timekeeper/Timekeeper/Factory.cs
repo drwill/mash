@@ -13,7 +13,7 @@ namespace Mash.Timekeeper
         /// <param name="name">The name of the time keeper</param>
         public static ITimekeeper GetTimekeeperInstance(string name = "")
         {
-            return new StopwatchWrapper(name);
+            return new StopwatchTimekeeper(name);
         }
     }
 }

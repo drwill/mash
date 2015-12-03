@@ -27,11 +27,14 @@ namespace SampleApp
 
         public decimal DecimalSetting { get; set; }
 
+        [AppSetting(SettingType = SettingType.Connectionstring)]
+        public string MyConnectionString1 { get; set; }
+
         public EnumValues EnumSetting { get; set; }
 
         public EnumValues EnumSettingInt { get; set; }
 
-        [AppSetting(IsConnectionString = true)]
+        [AppSetting(SettingType = SettingType.Connectionstring)]
         public IReadOnlyDictionary<string, string> ConnectionStrings { get; set; }
     }
 

@@ -1,5 +1,6 @@
 ﻿using Mash.AppSettings;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace SampleApp
@@ -20,10 +21,19 @@ namespace SampleApp
                     member.GetValue(settings) == null)
                 {
                     Console.WriteLine($"[{member.Name}] is [null]");
-                    continue;
                 }
-
-                Console.WriteLine($"Setting [{member.Name}] is [{member.GetValue(settings)}]");
+                else if (member.PropertyType == typeof(IReadOnlyDictionary<string, string>))
+                {
+                    Console.WriteLine($"[{member.Name}] is a dictionary of values:");
+                    foreach (var item in (IReadOnlyDictionary<string, string>)member.GetValue(settings))
+                    {
+                        Console.WriteLine($"\t[{item.Key}] = [{item.Value}]");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"Setting [{member.Name}] is [{member.GetValue(settings)}]");
+                }
             }
         }
 

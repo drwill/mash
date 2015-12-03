@@ -22,19 +22,33 @@ AppSettingsLoader.Load(
     ref settings);</code></pre>
 
 Your settings file will look something like this:
-<pre><code>class MySettings
+<pre><code>[AppSetting]
+class MySettings
 {
-    [AppSetting]
     public int MyIntValue { get; set; }
 
     [AppSetting(Key = "StringSettingOverride")]
     public string OverridenSetting { get; set; }
+
+    [AppSetting(SettingType = SettingType.ConnectionString)]
+    public string SpecificConnectionStringToLoadByKey { get; set; }
+
+	[AppSetting(SettingType = SettingType.ConnectionString)]
+    public IReadOnlyDictionary&lt;string, string&gt; ConnectionStrings { get; set; }
 }</code></pre>
 
 Or if you want to opt-in all public properties, you can just decorate the class with the AppSetting attribute.
 
+There are two options to load connection strings:
+1. A single connection string can be loaded into a named property.
+2. All connection strings can be loaded into a dictionary.
+
+Use the AppSetting "SettingType" attribute property and set it to "SettingType.ConnectionString".
+When loading all connection strings, the property type must be IReadOnlyDictionary&lt;string, string&gt;.
+In the dictionary, the key will hold the connection string's name, and the value will be connection string.
+
 ## App.Config
-Included is support for loading settings from your app.config file.
+Included is support for loading settings from your app.config or web.config file.
 
 ## Developer support
 Useful information will be traced during loading. Watch your output window for any issues encountered.

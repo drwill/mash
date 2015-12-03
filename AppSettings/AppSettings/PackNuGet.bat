@@ -1,1 +1,1 @@
-nuget pack AppSettings.csproj /properties "Configuration=Release"
+nuget pack AppSettings.csproj -Build -Properties "Configuration=Release"

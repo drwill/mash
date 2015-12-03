@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>0.9.2-alpha</version>
+    <!--<version>$version$</version>-->
+    <title>$title$</title>
+    <authors>MASH: David R. Williamson, Azad Abbasi</authors>
+    <owners>MASH: David R. Williamson, Azad Abbasi</owners>
+    <licenseUrl>https://github.com/drwill/mash/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/drwill/mash/tree/master/Timekeeper</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/drwill/mash/master/Timekeeper/Timekeeper/1448677366_icon-23-stop-watch.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>Update statistics snapshots and other refactoring.</releaseNotes>
+    <copyright>Copyright 2015</copyright>
+    <tags>stopwatch timer start stop measure capture average mean max</tags>
+  </metadata>
+</package>

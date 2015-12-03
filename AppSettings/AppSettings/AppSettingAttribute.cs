@@ -19,6 +19,9 @@ namespace Mash.AppSettings
         /// </remarks>
         public string Key { get; set; }
 
-        public bool IsConnectionString { get; set; }
+        /// <summary>
+        /// The type of setting to load
+        /// </summary>
+        public SettingType SettingType { get; set; }
     }
 }

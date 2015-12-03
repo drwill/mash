@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timekeeper", "Timekeeper\Timekeeper.csproj", "{D283B21B-1E10-4C18-BE04-A315DF5F3896}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApp", "SampleApp\SampleApp.csproj", "{CA0CC0A7-B6C9-4F87-8161-F8B38F6FDFEE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{421025EA-1C74-4627-B552-3846A412023D}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D283B21B-1E10-4C18-BE04-A315DF5F3896}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D283B21B-1E10-4C18-BE04-A315DF5F3896}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D283B21B-1E10-4C18-BE04-A315DF5F3896}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D283B21B-1E10-4C18-BE04-A315DF5F3896}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA0CC0A7-B6C9-4F87-8161-F8B38F6FDFEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA0CC0A7-B6C9-4F87-8161-F8B38F6FDFEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA0CC0A7-B6C9-4F87-8161-F8B38F6FDFEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA0CC0A7-B6C9-4F87-8161-F8B38F6FDFEE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

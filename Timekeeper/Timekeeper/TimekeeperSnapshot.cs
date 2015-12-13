@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Mash.Timekeeper
 {
@@ -79,7 +80,7 @@ namespace Mash.Timekeeper
             {
                 if (CaptureEndUtc.HasValue)
                 {
-                    throw new InvalidOperationException("No more captures can be added to the snapshot after it has an end date. This might be a timekeeper bug.");
+                    Trace.TraceError("No more captures can be added to the snapshot after it has an end date. This might be a timekeeper bug.");
                 }
 
                 ++CaptureCount;
@@ -90,6 +91,12 @@ namespace Mash.Timekeeper
 
         internal void EndCapture()
         {
+            if (CaptureEndUtc.HasValue)
+            {
+                Trace.TraceError("The snapshot has already been ended. This might be a timekeeper bug");
+                return;
+            }
+
             lock (_statisticsLock)
             {
                 CaptureEndUtc = DateTime.UtcNow;

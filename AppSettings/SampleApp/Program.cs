@@ -1,16 +1,10 @@
-﻿using Mash.AppSettings;
-
-namespace SampleApp
+﻿namespace SampleApp
 {
     class Program
     {
         static void Main(string[] args)
         {
-            var settings = new Settings();
-
-            AppSettingsLoader.Load(
-                Factory.GetAppConfigSettingLoader(),
-                ref settings);
+            var settings = Settings.Instance;
 
             SettingsHelper.PrintPropertyValuesToConsole(settings);
         }

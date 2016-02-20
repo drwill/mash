@@ -8,7 +8,7 @@ namespace SampleWebApp.Models
     /// Settings required for the running of this application
     /// </summary>
     [AppSetting]
-    internal class Settings
+    internal class Settings : SingletonSettings<Settings>
     {
         public string StringSetting { get; set; }
 

@@ -16,14 +16,11 @@ This will prevent code changes of how you load settings from impacting the rest 
 
 Your code will look like this:
 
-<pre><code>var settings = new Settings();
-AppSettingsLoader.Load(
-    Factory.GetAppConfigSettingLoader(),
-    ref settings);</code></pre>
+<pre><code>var settings = new Settings.Instance;</code></pre>
 
-Your settings file will look something like this:
+Your settings class will look something like this:
 <pre><code>[AppSetting]
-class MySettings
+class MySettings : SingletonSettings<MySettings>
 {
     public int MyIntValue { get; set; }
 
@@ -33,7 +30,7 @@ class MySettings
     [AppSetting(SettingType = SettingType.ConnectionString)]
     public string SpecificConnectionStringToLoadByKey { get; set; }
 
-	[AppSetting(SettingType = SettingType.ConnectionString)]
+    [AppSetting(SettingType = SettingType.ConnectionString)]
     public IReadOnlyDictionary&lt;string, string&gt; ConnectionStrings { get; set; }
 }</code></pre>
 
@@ -53,3 +50,13 @@ Included is support for loading settings from your app.config or web.config file
 ## Developer support
 Useful information will be traced during loading. Watch your output window for any issues encountered.
 Any problems loading values will be returned in an aggregate exception.
+
+## What's New?
+
+###Feb 20, 2016
+Added a singleton base class to derive your settings class from.
+Because the base class creates an instance of your class you must specify the type, and it must have a parameterless constructor.
+
+Initialization went from newing up your class and calling LoadSettings to one line: var settings = YourSettings.Instance.
+
+If you wish to override the default ISettingsLoader, you may do so with the SettingLoader property, just do so before accessing the Instance property.

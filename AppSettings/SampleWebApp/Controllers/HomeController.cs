@@ -8,11 +8,7 @@ namespace SampleWebApp.Controllers
     {
         public ActionResult Index()
         {
-            var settings = new Settings();
-
-            AppSettingsLoader.Load(
-                Factory.GetAppConfigSettingLoader(),
-                ref settings);
+            var settings = Settings.Instance;
 
             return View(SettingsHelper.GetPropertyValues(settings));
         }

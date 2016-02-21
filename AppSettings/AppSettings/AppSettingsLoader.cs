@@ -77,6 +77,11 @@ namespace Mash.AppSettings
                         var loadedConnectionString = settingLoader.GetConnectionString(settingName);
                         if (!CheckIfSettingIsValid(loadedConnectionString, settingName))
                         {
+                            if (IsSettingRequired(member))
+                            {
+                                exceptions.Add(new ArgumentException("The connection string could not be found.", settingName));
+                            }
+
                             continue;
                         }
 
@@ -90,6 +95,11 @@ namespace Mash.AppSettings
                     var loadedSetting = settingLoader.GetSetting(settingName);
                     if (!CheckIfSettingIsValid(loadedSetting, settingName))
                     {
+                        if (IsSettingRequired(member))
+                        {
+                            exceptions.Add(new ArgumentException("The setting could not be found.", settingName));
+                        }
+
                         continue;
                     }
 
@@ -125,8 +135,6 @@ namespace Mash.AppSettings
 
         private static bool IsSupportedConnectionStringsType(PropertyInfo member)
         {
-            var customAttribute = member.GetCustomAttribute<AppSettingAttribute>();
-
             if (IsConnectionStringSettingType(member) &&
                 member.PropertyType == typeof(IReadOnlyDictionary<string, string>))
             {
@@ -140,13 +148,14 @@ namespace Mash.AppSettings
         {
             var customAttribute = member.GetCustomAttribute<AppSettingAttribute>();
 
-            if (customAttribute != null &&
-                customAttribute.SettingType == SettingType.Connectionstring)
-            {
-                return true;
-            }
+            return customAttribute?.SettingType == SettingType.Connectionstring;
+        }
 
-            return false;
+        private static bool IsSettingRequired(PropertyInfo member)
+        {
+            var customAttribute = member.GetCustomAttribute<AppSettingAttribute>();
+
+            return customAttribute?.Optional == true;
         }
 
         private static bool CheckIfSettingIsValid(string loadedValue, string settingName)

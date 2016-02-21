@@ -20,7 +20,7 @@ Your code will look like this:
 
 Your settings class will look something like this:
 <pre><code>[AppSetting]
-class MySettings : SingletonSettings<MySettings>
+class MySettings : SingletonSettings&lt;MySettings&gt;
 {
     public int MyIntValue { get; set; }
 

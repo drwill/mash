@@ -16,7 +16,7 @@ This will prevent code changes of how you load settings from impacting the rest 
 
 Your code will look like this:
 
-<pre><code>var settings = new Settings.Instance;</code></pre>
+<pre><code>var settings = Settings.Instance;</code></pre>
 
 Your settings class will look something like this:
 <pre><code>[AppSetting]

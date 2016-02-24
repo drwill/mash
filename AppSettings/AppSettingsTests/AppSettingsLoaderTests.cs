@@ -176,43 +176,76 @@ namespace Mash.AppSettings.Tests
             Assert.AreEqual("Foobar", settings2.IsFoo, "String setting not set");
         }
 
+        [TestMethod]
+        public void AppSettingsLoader_Load_NoExceptionIfOptionalSettingDoesNotExist()
+        {
+            var mockSettingsLoader = new SettingLoaderMock();
+            // Set the required setting to avoid the exception, but don't set the optional setting
+            mockSettingsLoader.Settings.Add("RequiredSetting", "Exists");
+
+            var settings3 = new Settings3();
+
+            AppSettingsLoader.Load(mockSettingsLoader, ref settings3);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AggregateException))]
+        public void AppSettingsLoader_Load_ExceptionIfRequiredSettingDoesNotExist()
+        {
+            var mockSettingsLoader = new SettingLoaderMock();
+
+            var settings3 = new Settings3();
+
+            AppSettingsLoader.Load(mockSettingsLoader, ref settings3);
+        }
+
         private class Settings
         {
-            [AppSetting]
+            [AppSetting(Optional = true)]
             public bool IsTrue { get; set; }
 
-            [AppSetting]
+            [AppSetting(Optional = true)]
             public int Is42 { get; set; }
 
-            [AppSetting]
+            [AppSetting(Optional = true)]
             public string IsFoobar { get; set; }
 
-            [AppSetting]
+            [AppSetting(Optional = true)]
             public DateTime IsToday { get; set; }
 
-            [AppSetting]
+            [AppSetting(Optional = true)]
             public Guid IsGuid { get; set; }
 
-            [AppSetting]
+            [AppSetting(Optional = true)]
             public Option IsOption2 { get; set; }
 
-            [AppSetting(SettingType = SettingType.Connectionstring)]
+            [AppSetting(SettingType = SettingType.Connectionstring, Optional = true)]
             public IReadOnlyDictionary<string, string> ConnectionStrings { get; set; }
 
-            [AppSetting(SettingType = SettingType.Connectionstring)]
+            [AppSetting(SettingType = SettingType.Connectionstring, Optional = true)]
             public string SingleConnectionString { get; set; }
         }
 
         [AppSetting]
         private class Settings2
         {
+            [AppSetting(Optional = true)]
             public int Is42 { get; set; }
 
-            [AppSetting(Key = "IsFooBar")]
+            [AppSetting(Key = "IsFooBar", Optional = true)]
             public string IsFoo { get; set; }
             
-            [AppSetting(SettingType = SettingType.Connectionstring)]
+            [AppSetting(SettingType = SettingType.Connectionstring, Optional = true)]
             public IReadOnlyDictionary<string, string> ConnectionStrings { get; set; }
+        }
+
+        private class Settings3
+        {
+            [AppSetting(Optional = true)]
+            public string OptionalSetting { get; set; }
+
+            [AppSetting]
+            public string RequiredSetting { get; set; }
         }
 
         private enum Option

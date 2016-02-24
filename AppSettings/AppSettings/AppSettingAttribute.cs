@@ -6,7 +6,7 @@ namespace Mash.AppSettings
     /// A code attribute for decorating a settings class' properties
     /// </summary>
     /// <remarks>
-    /// As a convenience to avoid decorating each property, you may choose to attribte the class which will opt in all class public properties.
+    /// As a convenience to avoid decorating each property, you may choose to attribute the class which will opt in all class public properties.
     /// </remarks>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Class)]
     public sealed class AppSettingAttribute : Attribute
@@ -23,5 +23,10 @@ namespace Mash.AppSettings
         /// The type of setting to load
         /// </summary>
         public SettingType SettingType { get; set; }
+
+        /// <summary>
+        /// If the setting is optional, an exception will not be thrown if it does not exist
+        /// </summary>
+        public bool Optional { get; set; }
     }
 }

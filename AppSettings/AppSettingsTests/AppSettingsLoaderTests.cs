@@ -300,22 +300,18 @@ namespace Mash.AppSettings.Tests
 
         private class Settings4
         {
-            [AppSetting(Optional = true, SettingType = SettingType.ArrayList)]
+            [AppSetting(Optional = true)]
             public IList<string> OptionalSetting { get; set; }
 
-            [AppSetting(SettingType = SettingType.ArrayList)]
+            [AppSetting()]
             public IList<string> RequiredSetting { get; set; }
         }
 
+        [AppSetting()]
         private class Setting5
         {
-            [AppSetting(SettingType = SettingType.ArrayList)]
             public IList<string> ArrayListString { get; set; }
-
-            [AppSetting(SettingType = SettingType.ArrayList)]
             public IList<int> ArrayListInt { get; set; }
-
-            [AppSetting(SettingType = SettingType.ArrayList)]
             public IList<Option> ArrayListEnum { get; set; }
         }
 

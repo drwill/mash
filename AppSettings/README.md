@@ -40,7 +40,7 @@ class MySettings : SingletonSettings&lt;MySettings&gt;
     public IList<string> ListOfStrings { get; set; }
 
 	[AppSetting(SettingType = SettingType.ArrayList)]
-    public IList<int> ListOIntegers { get; set; }
+    public IList&ltint&gt ListOIntegers { get; set; }
 
 }</code></pre>
 

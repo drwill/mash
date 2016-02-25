@@ -1,14 +1,14 @@
 # Mash.AppSettings
 
-Tired of littering your code with ConfigurationManager.AppSettings["TheSetting"] and parsing the string the type you want?
+Tired of littering your code with ConfigurationManager.AppSettings["TheSetting"] and parsing the string the type you need?
 Let's make loading settings easy with very little code investment.
 
-Just create a data class which holds properties representing the settings you wish to load, and then call Load().
-Mash.AppSettings use reflection on your data class to find public properties with our attribute and find a setting with that key in your app.config, and then set the value.
+Just create a data class which holds default properties representing the settings you wish to load, and then call Load().
+Mash.AppSettings uses reflection on your data class to find public properties with our attribute, find a setting with that key in your app.config, and then sets the value on that property.
 
-Now your unit tests won't have problems if they call code which directly loaded from the app.config.
+Also, now your unit tests won't have problems if they call code which directly loaded from the app.config.
 Instead they can set your settings class with any values they want.
-This makes your code a lot more cohesive, and prevent unnecessary coupling to System.Configuration.
+This makes your code a lot more cohesive, and prevents unnecessary coupling to System.Configuration.
 
 Don't want to store settings in your app.config file? No problem!
 The loader uses an interface to determine where it gets its settings from so you can replace it later with another implementation.
@@ -16,7 +16,7 @@ This will prevent code changes of how you load settings from impacting the rest 
 
 Your code will look like this:
 
-<pre><code>var settings = new Settings.Instance;</code></pre>
+<pre><code>var settings = Settings.Instance;</code></pre>
 
 Your settings class will look something like this:
 <pre><code>[AppSetting]
@@ -26,6 +26,9 @@ class MySettings : SingletonSettings&lt;MySettings&gt;
 
     [AppSetting(Key = "StringSettingOverride")]
     public string OverridenSetting { get; set; }
+
+    [AppSetting(Optional = true)]
+    public string OptionalSetting { get; set; }
 
     [AppSetting(SettingType = SettingType.ConnectionString)]
     public string SpecificConnectionStringToLoadByKey { get; set; }
@@ -49,9 +52,13 @@ Included is support for loading settings from your app.config or web.config file
 
 ## Developer support
 Useful information will be traced during loading. Watch your output window for any issues encountered.
-Any problems loading values will be returned in an aggregate exception.
+Any problems loading values will be returned in an aggregate exception, unless your property is decorated as Optional.
 
 ## What's New?
+
+###Feb 21, 2016
+In order to prevent bugs due to settings that don't exist at the source, an exception will now be thrown.
+If you do not wish to be notified with an exception, mark the setting as Optional (see example above).
 
 ###Feb 20, 2016
 Added a singleton base class to derive your settings class from.

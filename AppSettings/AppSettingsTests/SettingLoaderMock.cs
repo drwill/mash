@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Mash.AppSettings.Tests
@@ -12,10 +13,13 @@ namespace Mash.AppSettings.Tests
 
         public IDictionary<string, string> ConnectionStrings { get; private set; }
 
+        public IList ArrayListString { get; private set; }
+
         public SettingLoaderMock()
         {
             Settings = new Dictionary<string, string>();
             ConnectionStrings = new Dictionary<string, string>();
+            ArrayListString = new List<string>();
         }
 
         public string GetSetting(string settingName)
@@ -42,6 +46,11 @@ namespace Mash.AppSettings.Tests
         public IDictionary<string, string> GetConnectionStrings()
         {
             return ConnectionStrings;
+        }
+
+        public IList GetArrayList(string settingKey)
+        {
+            return ArrayListString;
         }
     }
 }

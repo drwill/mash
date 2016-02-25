@@ -198,6 +198,59 @@ namespace Mash.AppSettings.Tests
 
             AppSettingsLoader.Load(mockSettingsLoader, ref settings3);
         }
+        
+        [TestMethod]
+        public void AppSettingsLoader_Load_LoadsArrayListString()
+        {
+            var mockSettingsLoader = new SettingLoaderMock();
+            mockSettingsLoader.ArrayListString.Add("string1");
+            mockSettingsLoader.ArrayListString.Add("string2");
+            mockSettingsLoader.ArrayListString.Add("string3");
+
+            var settings5 = new Setting5();
+
+            Assert.IsTrue(AppSettingsLoader.Load(mockSettingsLoader, ref settings5), "Load returned false");
+            Assert.AreEqual(mockSettingsLoader.ArrayListString.Count, settings5.ArrayListString.Count, "String setting not set");
+        }
+
+        [TestMethod]
+        public void AppSettingsLoader_Load_LoadsArrayListInt()
+        {
+            var mockSettingsLoader = new SettingLoaderMock();
+            mockSettingsLoader.ArrayListString.Add("1");
+            mockSettingsLoader.ArrayListString.Add("2");
+            mockSettingsLoader.ArrayListString.Add("3");
+
+            var settings5 = new Setting5();
+
+            Assert.IsTrue(AppSettingsLoader.Load(mockSettingsLoader, ref settings5), "Load returned false");
+            Assert.AreEqual(mockSettingsLoader.ArrayListString.Count, settings5.ArrayListInt.Count, "String setting not set");
+        }
+
+        [TestMethod]
+        public void AppSettingsLoader_Load_LoadsArrayListEnum()
+        {
+            var mockSettingsLoader = new SettingLoaderMock();
+            mockSettingsLoader.ArrayListString.Add("Value1");
+            mockSettingsLoader.ArrayListString.Add("Value2");
+            mockSettingsLoader.ArrayListString.Add("Value2");
+
+            var settings5 = new Setting5();
+
+            Assert.IsTrue(AppSettingsLoader.Load(mockSettingsLoader, ref settings5), "Load returned false");
+            Assert.AreEqual(mockSettingsLoader.ArrayListString.Count, settings5.ArrayListEnum.Count, "String setting not set");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AggregateException))]
+        public void AppSettingsLoader_Load_ExceptionIfRequiredListDoesNotExist()
+        {
+            var mockSettingsLoader = new SettingLoaderMock();
+           
+            var settings4 = new Settings4();
+
+            AppSettingsLoader.Load(mockSettingsLoader, ref settings4);
+        }
 
         private class Settings
         {
@@ -247,6 +300,28 @@ namespace Mash.AppSettings.Tests
             [AppSetting]
             public string RequiredSetting { get; set; }
         }
+
+        private class Settings4
+        {
+            [AppSetting(Optional = true, SettingType = SettingType.ArrayList)]
+            public IList<string> OptionalSetting { get; set; }
+
+            [AppSetting(SettingType = SettingType.ArrayList)]
+            public IList<string> RequiredSetting { get; set; }
+        }
+
+        private class Setting5
+        {
+            [AppSetting(SettingType = SettingType.ArrayList)]
+            public IList<string> ArrayListString { get; set; }
+
+            [AppSetting(SettingType = SettingType.ArrayList)]
+            public IList<int> ArrayListInt { get; set; }
+
+            [AppSetting(SettingType = SettingType.ArrayList)]
+            public IList<Option> ArrayListEnum { get; set; }
+        }
+
 
         private enum Option
         {

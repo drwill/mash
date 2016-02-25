@@ -194,7 +194,7 @@ namespace Mash.AppSettings
         {
             var customAttribute = member.GetCustomAttribute<AppSettingAttribute>();
 
-            return customAttribute?.Optional == true;
+            return customAttribute?.Optional == false;
         }
 
         private static bool CheckIfSettingIsValid(string loadedValue, string settingName)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Mash.AppSettings.Tests
 {
@@ -50,7 +51,16 @@ namespace Mash.AppSettings.Tests
 
         public IList GetArrayList(string settingKey)
         {
-            return ArrayListString;
+            var settingStringValue = GetSetting(settingKey);
+
+            if (string.IsNullOrEmpty(settingStringValue))
+            {
+                return null;
+            }
+
+            List<string> retValue = new List<string>();
+
+            return settingStringValue.Split(',').ToArray();
         }
     }
 }

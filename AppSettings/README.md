@@ -37,7 +37,7 @@ class MySettings : SingletonSettings&lt;MySettings&gt;
     public IReadOnlyDictionary&lt;string, string&gt; ConnectionStrings { get; set; }
 
 	[AppSetting(SettingType = SettingType.ArrayList)]
-    public IList<string> ListOfStrings { get; set; }
+    public IList&ltstring&gt ListOfStrings { get; set; }
 
 	[AppSetting(SettingType = SettingType.ArrayList)]
     public IList&ltint&gt ListOIntegers { get; set; }

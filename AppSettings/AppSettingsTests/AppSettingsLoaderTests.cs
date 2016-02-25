@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Mash.AppSettings.Tests
 {
@@ -199,6 +200,55 @@ namespace Mash.AppSettings.Tests
             AppSettingsLoader.Load(mockSettingsLoader, ref settings3);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(AggregateException))]
+        public void AppSettingsLoader_Load_ExceptionIfRequiredListDoesNotExist()
+        {
+            var mockSettingsLoader = new SettingLoaderMock();
+
+            var settings4 = new Settings4();
+
+            AppSettingsLoader.Load(mockSettingsLoader, ref settings4);
+        }
+
+        [TestMethod]
+        public void AppSettingsLoader_Load_NoExceptionIfOptionalListDoesNotExist()
+        {
+            var mockSettingsLoader = new SettingLoaderMock();
+
+            mockSettingsLoader.Settings.Add("RequiredSetting", "st1, st2");
+
+            var settings4 = new Settings4();
+
+            AppSettingsLoader.Load(mockSettingsLoader, ref settings4);
+        }
+
+        [TestMethod]
+        public void AppSettingsLoader_Load_LoadsArrayListString()
+        {
+            var mockSettingsLoader = new SettingLoaderMock();
+
+            mockSettingsLoader.ArrayListString.Clear();
+
+            mockSettingsLoader.Settings.Add("ArrayListString", "string3");
+            mockSettingsLoader.Settings.Add("ArrayListInt", "1,2");
+            mockSettingsLoader.Settings.Add("ArrayListEnum", "Option0,Option1,Option2");
+
+            var settings5 = new Setting5();
+
+            Assert.IsTrue(AppSettingsLoader.Load(mockSettingsLoader, ref settings5), "Load returned false");
+            Assert.AreEqual(
+                mockSettingsLoader.Settings["ArrayListString"].Split(',').ToArray().Count(),
+                settings5.ArrayListString.Count,
+                "String array not set");
+            Assert.AreEqual(mockSettingsLoader.Settings["ArrayListEnum"].Split(',').ToArray().Count(),
+                settings5.ArrayListEnum.Count, 
+                "Enum Array not set");
+            Assert.AreEqual(mockSettingsLoader.Settings["ArrayListInt"].Split(',').ToArray().Count(),
+                settings5.ArrayListInt.Count, 
+                "Int Array not set");
+        }
+
         private class Settings
         {
             [AppSetting(Optional = true)]
@@ -247,6 +297,28 @@ namespace Mash.AppSettings.Tests
             [AppSetting]
             public string RequiredSetting { get; set; }
         }
+
+        private class Settings4
+        {
+            [AppSetting(Optional = true, SettingType = SettingType.ArrayList)]
+            public IList<string> OptionalSetting { get; set; }
+
+            [AppSetting(SettingType = SettingType.ArrayList)]
+            public IList<string> RequiredSetting { get; set; }
+        }
+
+        private class Setting5
+        {
+            [AppSetting(SettingType = SettingType.ArrayList)]
+            public IList<string> ArrayListString { get; set; }
+
+            [AppSetting(SettingType = SettingType.ArrayList)]
+            public IList<int> ArrayListInt { get; set; }
+
+            [AppSetting(SettingType = SettingType.ArrayList)]
+            public IList<Option> ArrayListEnum { get; set; }
+        }
+
 
         private enum Option
         {

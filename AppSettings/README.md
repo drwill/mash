@@ -35,6 +35,13 @@ class MySettings : SingletonSettings&lt;MySettings&gt;
 
     [AppSetting(SettingType = SettingType.ConnectionString)]
     public IReadOnlyDictionary&lt;string, string&gt; ConnectionStrings { get; set; }
+
+	[AppSetting(SettingType = SettingType.ArrayList)]
+    public IList&ltstring&gt ListOfStrings { get; set; }
+
+	[AppSetting(SettingType = SettingType.ArrayList)]
+    public IList&ltint&gt ListOIntegers { get; set; }
+
 }</code></pre>
 
 Or if you want to opt-in all public properties, you can just decorate the class with the AppSetting attribute.
@@ -55,6 +62,10 @@ Useful information will be traced during loading. Watch your output window for a
 Any problems loading values will be returned in an aggregate exception, unless your property is decorated as Optional.
 
 ## What's New?
+
+###Feb 25, 2016
+You can now load array list settings into your setting class. Simply use the AppSetting "SettingType" attribute and set it to ArrayList.
+You can specify the type of the list and load any primitive and enum type into a list.
 
 ###Feb 21, 2016
 In order to prevent bugs due to settings that don't exist at the source, an exception will now be thrown.

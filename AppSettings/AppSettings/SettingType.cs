@@ -6,6 +6,7 @@
     public enum SettingType
     {
         Setting,
-        Connectionstring
+        Connectionstring,
+        ArrayList
     }
 }

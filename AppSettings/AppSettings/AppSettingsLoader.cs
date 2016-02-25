@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -91,6 +92,37 @@ namespace Mash.AppSettings
                         continue;
                     }
 
+                    // Load arraylist setting
+                    if (IsArrayListSettingType(member))
+                    {
+                        Trace.TraceInformation($"Loading array list into [{member.Name}].");
+
+                        Type memberListType = member.PropertyType.GetGenericArguments()[0];
+                        
+                        Type listType = typeof(List<>).MakeGenericType(new[] { memberListType });
+                        IList list = (IList)Activator.CreateInstance(listType);
+
+                        IList settingarrayList = settingLoader.GetArrayList(settingName);
+
+                        if (!CheckIfSettingIsValid(settingarrayList, settingName))
+                        {
+                            if (IsSettingRequired(member))
+                            {
+                                exceptions.Add(new ArgumentException("The arraylist could not be found.", settingName));
+                            }
+
+                            continue;
+                        }
+
+                        foreach (string stringvalue in settingarrayList)
+                        {
+                            list.Add(TypeParser.GetTypedValue(memberListType, stringvalue));
+                        }
+
+                        member.SetValue(settingsClass, list);
+                        continue;
+                    }
+
                     // Load normal setting types
                     var loadedSetting = settingLoader.GetSetting(settingName);
                     if (!CheckIfSettingIsValid(loadedSetting, settingName))
@@ -151,16 +183,34 @@ namespace Mash.AppSettings
             return customAttribute?.SettingType == SettingType.Connectionstring;
         }
 
+        private static bool IsArrayListSettingType(PropertyInfo member)
+        {
+            var customAttribute = member.GetCustomAttribute<AppSettingAttribute>();
+
+            return customAttribute?.SettingType == SettingType.ArrayList;
+        }
+
         private static bool IsSettingRequired(PropertyInfo member)
         {
             var customAttribute = member.GetCustomAttribute<AppSettingAttribute>();
 
-            return customAttribute?.Optional == true;
+            return customAttribute?.Optional == false;
         }
 
         private static bool CheckIfSettingIsValid(string loadedValue, string settingName)
         {
             if (String.IsNullOrEmpty(loadedValue))
+            {
+                Trace.TraceWarning($"No value found for [{settingName}].");
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool CheckIfSettingIsValid(IList loadedValue, string settingName)
+        {
+            if (loadedValue == null || loadedValue.Count == 0)
             {
                 Trace.TraceWarning($"No value found for [{settingName}].");
                 return false;

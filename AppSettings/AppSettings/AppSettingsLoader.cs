@@ -93,7 +93,7 @@ namespace Mash.AppSettings
                     }
 
                     // Load arraylist setting
-                    if (IsArrayListSettingType(member))
+                    if (IsSupportedArrayListType(member))
                     {
                         Trace.TraceInformation($"Loading array list into [{member.Name}].");
 
@@ -176,18 +176,21 @@ namespace Mash.AppSettings
             return false;
         }
 
+        private static bool IsSupportedArrayListType(PropertyInfo member)
+        {
+            if (member.PropertyType.Name == typeof(IList<>).Name)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         private static bool IsConnectionStringSettingType(PropertyInfo member)
         {
             var customAttribute = member.GetCustomAttribute<AppSettingAttribute>();
 
             return customAttribute?.SettingType == SettingType.Connectionstring;
-        }
-
-        private static bool IsArrayListSettingType(PropertyInfo member)
-        {
-            var customAttribute = member.GetCustomAttribute<AppSettingAttribute>();
-
-            return customAttribute?.SettingType == SettingType.ArrayList;
         }
 
         private static bool IsSettingRequired(PropertyInfo member)

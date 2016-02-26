@@ -92,37 +92,6 @@ namespace Mash.AppSettings
                         continue;
                     }
 
-                    // Load arraylist setting
-                    if (IsArrayListSettingType(member))
-                    {
-                        Trace.TraceInformation($"Loading array list into [{member.Name}].");
-
-                        Type memberListType = member.PropertyType.GetGenericArguments()[0];
-                        
-                        Type listType = typeof(List<>).MakeGenericType(new[] { memberListType });
-                        IList list = (IList)Activator.CreateInstance(listType);
-
-                        IList settingarrayList = settingLoader.GetArrayList(settingName);
-
-                        if (!CheckIfSettingIsValid(settingarrayList, settingName))
-                        {
-                            if (IsSettingRequired(member))
-                            {
-                                exceptions.Add(new ArgumentException("The arraylist could not be found.", settingName));
-                            }
-
-                            continue;
-                        }
-
-                        foreach (string stringvalue in settingarrayList)
-                        {
-                            list.Add(TypeParser.GetTypedValue(memberListType, stringvalue));
-                        }
-
-                        member.SetValue(settingsClass, list);
-                        continue;
-                    }
-
                     // Load normal setting types
                     var loadedSetting = settingLoader.GetSetting(settingName);
                     if (!CheckIfSettingIsValid(loadedSetting, settingName))
@@ -135,8 +104,30 @@ namespace Mash.AppSettings
                         continue;
                     }
 
-                    var parsedSetting = TypeParser.GetTypedValue(member.PropertyType, loadedSetting);
-                    member.SetValue(settingsClass, parsedSetting);
+                    if (IsList(member))
+                    {
+                        Type itemType = member.PropertyType
+                            .GetGenericArguments()
+                            .First();
+
+                        Type listType = member.PropertyType
+                            .GetGenericTypeDefinition()
+                            .MakeGenericType(itemType);
+
+                        dynamic list = Activator.CreateInstance(listType);
+
+                        foreach (var item in loadedSetting.Split(','))
+                        {
+                            ((IList)list).Add(TypeParser.GetTypedValue(itemType, item));
+                        }
+
+                        member.SetValue(settingsClass, list);
+                    }
+                    else
+                    {
+                        var parsedSetting = TypeParser.GetTypedValue(member.PropertyType, loadedSetting);
+                        member.SetValue(settingsClass, parsedSetting);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -183,11 +174,13 @@ namespace Mash.AppSettings
             return customAttribute?.SettingType == SettingType.Connectionstring;
         }
 
-        private static bool IsArrayListSettingType(PropertyInfo member)
+        private static bool IsList(PropertyInfo member)
         {
-            var customAttribute = member.GetCustomAttribute<AppSettingAttribute>();
+            var interfaces = member.PropertyType.FindInterfaces(
+                (Type t, object o) => t.ToString().StartsWith(o.ToString()),
+                "System.Collections.Generic.IList`1");
 
-            return customAttribute?.SettingType == SettingType.ArrayList;
+            return interfaces.Any() && member.PropertyType.IsClass;
         }
 
         private static bool IsSettingRequired(PropertyInfo member)
@@ -200,17 +193,6 @@ namespace Mash.AppSettings
         private static bool CheckIfSettingIsValid(string loadedValue, string settingName)
         {
             if (String.IsNullOrEmpty(loadedValue))
-            {
-                Trace.TraceWarning($"No value found for [{settingName}].");
-                return false;
-            }
-
-            return true;
-        }
-
-        private static bool CheckIfSettingIsValid(IList loadedValue, string settingName)
-        {
-            if (loadedValue == null || loadedValue.Count == 0)
             {
                 Trace.TraceWarning($"No value found for [{settingName}].");
                 return false;

@@ -37,16 +37,16 @@ namespace SampleApp
         [AppSetting(SettingType = SettingType.Connectionstring)]
         public IReadOnlyDictionary<string, string> ConnectionStrings { get; set; }
 
-        [AppSetting(SettingType = SettingType.ArrayList)]
-        public IList<int> ArraylistSettingInt { get; set; }
+        [AppSetting]
+        public IList<int> CollectionSettingInt { get; set; }
 
-        [AppSetting(SettingType = SettingType.ArrayList)]
-        public IList<EnumValues> ArraylistSettingEnum { get; set; }
+        [AppSetting]
+        public IList<EnumValues> CollectionSettingEnum { get; set; }
     }
 
     internal enum EnumValues
     {
         Value1 = 1,
-        Value2 = 2
+        Value2 = 2,
     }
 }

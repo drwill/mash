@@ -7,6 +7,5 @@
     {
         Setting,
         Connectionstring,
-        ArrayList
     }
 }

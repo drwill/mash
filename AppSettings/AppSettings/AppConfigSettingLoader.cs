@@ -57,19 +57,5 @@ namespace Mash.AppSettings
 
             return connectionStrings;
         }
-
-        public IList GetArrayList(string settingKey)
-        {
-            var settingStringValue = GetSetting(settingKey);
-
-            if (string.IsNullOrEmpty(settingStringValue))
-            {
-                return null;
-            }
-
-            List<string> retValue = new List<string>();
-
-            return settingStringValue.Split(',').ToArray();
-        }
     }
 }

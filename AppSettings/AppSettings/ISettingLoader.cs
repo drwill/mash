@@ -29,7 +29,5 @@ namespace Mash.AppSettings
         /// A dictionary of connection strings where key is the name and the value is the connection string
         /// </returns>
         IDictionary<string, string> GetConnectionStrings();
-
-        IList GetArrayList(string settingKey);
     }
 }

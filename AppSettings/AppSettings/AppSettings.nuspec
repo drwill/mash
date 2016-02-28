@@ -11,7 +11,7 @@
     <iconUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Simple_cog.svg/120px-Simple_cog.svg.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Enable loading of a connection string by name to a specific property</releaseNotes>
+    <releaseNotes>Added support for loading comma-delimited settings into an ICollection of T, and bug fix for Optional feature</releaseNotes>
     <copyright>Copyright 2015</copyright>
     <tags>application settings loader app.config web.config</tags>
   </metadata>

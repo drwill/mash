@@ -14,7 +14,7 @@ namespace Mash.AppSettings.Tests
             var mockSettingsLoader = new SettingLoaderMock();
             mockSettingsLoader.Settings.Add("IsTrue", "true");
 
-            var settings = new Settings();
+            var settings = new SettingsPrimitives();
 
             Assert.IsTrue(AppSettingsLoader.Load(mockSettingsLoader, ref settings), "Load returned false");
             Assert.IsTrue(settings.IsTrue, "Boolean setting not set to true");
@@ -26,7 +26,7 @@ namespace Mash.AppSettings.Tests
             var mockSettingsLoader = new SettingLoaderMock();
             mockSettingsLoader.Settings.Add("Is42", "42");
 
-            var settings = new Settings();
+            var settings = new SettingsPrimitives();
 
             Assert.IsTrue(AppSettingsLoader.Load(mockSettingsLoader, ref settings), "Load returned false");
             Assert.AreEqual(42, settings.Is42, "Int setting not set");
@@ -38,7 +38,7 @@ namespace Mash.AppSettings.Tests
             var mockSettingsLoader = new SettingLoaderMock();
             mockSettingsLoader.Settings.Add("IsFoobar", "Foobar");
 
-            var settings = new Settings();
+            var settings = new SettingsPrimitives();
 
             Assert.IsTrue(AppSettingsLoader.Load(mockSettingsLoader, ref settings), "Load returned false");
             Assert.AreEqual("Foobar", settings.IsFoobar, "String setting not set");
@@ -52,7 +52,7 @@ namespace Mash.AppSettings.Tests
 
             mockSettingsLoader.Settings.Add("IsToday", today.ToString());
 
-            var settings = new Settings();
+            var settings = new SettingsPrimitives();
 
             Assert.IsTrue(AppSettingsLoader.Load(mockSettingsLoader, ref settings), "Load returned false");
             Assert.AreEqual(today, settings.IsToday, "DateTime setting not set");
@@ -66,7 +66,7 @@ namespace Mash.AppSettings.Tests
 
             mockSettingsLoader.Settings.Add("IsGuid", guid.ToString());
 
-            var settings = new Settings();
+            var settings = new SettingsPrimitives();
 
             Assert.IsTrue(AppSettingsLoader.Load(mockSettingsLoader, ref settings), "Load returned false");
             Assert.AreEqual(guid, settings.IsGuid, "Guid setting not set");
@@ -80,7 +80,7 @@ namespace Mash.AppSettings.Tests
 
             mockSettingsLoader.Settings.Add("IsOption2", option.ToString());
 
-            var settings = new Settings();
+            var settings = new SettingsPrimitives();
 
             Assert.IsTrue(AppSettingsLoader.Load(mockSettingsLoader, ref settings), "Load returned false");
             Assert.AreEqual(option, settings.IsOption2, "Enum setting not set");
@@ -94,7 +94,7 @@ namespace Mash.AppSettings.Tests
 
             mockSettingsLoader.Settings.Add("IsOption2", ((int)option).ToString());
 
-            var settings = new Settings();
+            var settings = new SettingsPrimitives();
 
             Assert.IsTrue(AppSettingsLoader.Load(mockSettingsLoader, ref settings), "Load returned false");
             Assert.AreEqual(option, settings.IsOption2, "Enum setting not set");
@@ -109,7 +109,7 @@ namespace Mash.AppSettings.Tests
 
             mockSettingLoader.ConnectionStrings.Add(connectionStringName, connectionStringValue);
 
-            var settings = new Settings();
+            var settings = new SettingsConnectionString();
 
             Assert.IsTrue(AppSettingsLoader.Load(mockSettingLoader, ref settings), "Load returned flase");
             Assert.AreEqual(connectionStringValue, settings.SingleConnectionString);
@@ -124,7 +124,7 @@ namespace Mash.AppSettings.Tests
 
             mockSettingLoader.ConnectionStrings.Add(connectionStringName, connectionStringValue);
 
-            var settings = new Settings();
+            var settings = new SettingsConnectionStrings();
 
             Assert.IsTrue(AppSettingsLoader.Load(mockSettingLoader, ref settings), "Load returned flase");
             Assert.IsTrue(settings.ConnectionStrings.ContainsKey(connectionStringName));
@@ -136,7 +136,7 @@ namespace Mash.AppSettings.Tests
             var mockSettingsLoader = new SettingLoaderMock();
             mockSettingsLoader.Settings.Add("Is42", "fourty-two");
 
-            var settings = new Settings();
+            var settings = new SettingsPrimitives();
 
             bool exceptionCaught = false;
 
@@ -159,10 +159,10 @@ namespace Mash.AppSettings.Tests
             var mockSettingsLoader = new SettingLoaderMock();
             mockSettingsLoader.Settings.Add("Is42", "42");
 
-            var settings2 = new Settings2();
+            var settings = new SettingsUndecoratedProperties();
 
-            Assert.IsTrue(AppSettingsLoader.Load(mockSettingsLoader, ref settings2), "Load returned false");
-            Assert.AreEqual(42, settings2.Is42, "Int setting not set");
+            Assert.IsTrue(AppSettingsLoader.Load(mockSettingsLoader, ref settings), "Load returned false");
+            Assert.AreEqual(42, settings.Is42, "Int setting not set");
         }
 
         [TestMethod]
@@ -171,10 +171,10 @@ namespace Mash.AppSettings.Tests
             var mockSettingsLoader = new SettingLoaderMock();
             mockSettingsLoader.Settings.Add("IsFooBar", "Foobar");
 
-            var settings2 = new Settings2();
+            var settings = new SettingsOverride();
 
-            Assert.IsTrue(AppSettingsLoader.Load(mockSettingsLoader, ref settings2), "Load returned false");
-            Assert.AreEqual("Foobar", settings2.IsFoo, "String setting not set");
+            Assert.IsTrue(AppSettingsLoader.Load(mockSettingsLoader, ref settings), "Load returned false");
+            Assert.AreEqual("Foobar", settings.IsFoo, "String setting not set");
         }
 
         [TestMethod]
@@ -184,9 +184,9 @@ namespace Mash.AppSettings.Tests
             // Set the required setting to avoid the exception, but don't set the optional setting
             mockSettingsLoader.Settings.Add("RequiredSetting", "Exists");
 
-            var settings3 = new Settings3();
+            var settings = new SettingsOptional();
 
-            AppSettingsLoader.Load(mockSettingsLoader, ref settings3);
+            AppSettingsLoader.Load(mockSettingsLoader, ref settings);
         }
 
         [TestMethod]
@@ -195,9 +195,9 @@ namespace Mash.AppSettings.Tests
         {
             var mockSettingsLoader = new SettingLoaderMock();
 
-            var settings3 = new Settings3();
+            var settings = new SettingsOptional();
 
-            AppSettingsLoader.Load(mockSettingsLoader, ref settings3);
+            AppSettingsLoader.Load(mockSettingsLoader, ref settings);
         }
 
         [TestMethod]
@@ -209,27 +209,27 @@ namespace Mash.AppSettings.Tests
             mockSettingsLoader.Settings.Add("IntCollection", "1,2,3");
             mockSettingsLoader.Settings.Add("EnumCollection", "Option0,Option1,Option2");
 
-            var settings5 = new Setting5();
+            var settings = new SettingsCollections();
 
-            Assert.IsTrue(AppSettingsLoader.Load(mockSettingsLoader, ref settings5), "Load returned false");
+            Assert.IsTrue(AppSettingsLoader.Load(mockSettingsLoader, ref settings), "Load returned false");
 
             CollectionAssert.AreEqual(
                 mockSettingsLoader.Settings["StringCollection"].Split(','),
-                settings5.StringCollection.ToArray(),
+                settings.StringCollection.ToArray(),
                 "String collection not set");
 
             CollectionAssert.AreEqual(
                 mockSettingsLoader.Settings["IntCollection"].Split(',').Select(i => Int32.Parse(i)).ToArray(),
-                settings5.IntCollection.ToArray(),
+                settings.IntCollection.ToArray(),
                 "Int collection not set");
 
             CollectionAssert.AreEqual(
                 mockSettingsLoader.Settings["EnumCollection"].Split(',').Select(e => Enum.Parse(typeof(Option), e, false)).ToArray(),
-                settings5.EnumCollection.ToArray(),
+                settings.EnumCollection.ToArray(),
                 "Enum collection not set");
         }
 
-        private class Settings
+        public class SettingsPrimitives
         {
             [AppSetting(Optional = true)]
             public bool IsTrue { get; set; }
@@ -248,28 +248,33 @@ namespace Mash.AppSettings.Tests
 
             [AppSetting(Optional = true)]
             public Option IsOption2 { get; set; }
+        }
 
-            [AppSetting(SettingType = SettingType.Connectionstring, Optional = true)]
-            public IReadOnlyDictionary<string, string> ConnectionStrings { get; set; }
-
-            [AppSetting(SettingType = SettingType.Connectionstring, Optional = true)]
+        public class SettingsConnectionString
+        {
+            [AppSetting(SettingType = SettingType.Connectionstring)]
             public string SingleConnectionString { get; set; }
         }
 
-        [AppSetting]
-        private class Settings2
+        public class SettingsConnectionStrings
         {
-            [AppSetting(Optional = true)]
-            public int Is42 { get; set; }
-
-            [AppSetting(Key = "IsFooBar", Optional = true)]
-            public string IsFoo { get; set; }
-
-            [AppSetting(SettingType = SettingType.Connectionstring, Optional = true)]
+            [AppSetting(SettingType = SettingType.Connectionstring)]
             public IReadOnlyDictionary<string, string> ConnectionStrings { get; set; }
         }
 
-        private class Settings3
+        [AppSetting]
+        public class SettingsUndecoratedProperties
+        {
+            public int Is42 { get; set; }
+        }
+
+        public class SettingsOverride
+        {
+            [AppSetting(Key = "IsFooBar")]
+            public string IsFoo { get; set; }
+        }
+
+        public class SettingsOptional
         {
             [AppSetting(Optional = true)]
             public string OptionalSetting { get; set; }
@@ -279,14 +284,14 @@ namespace Mash.AppSettings.Tests
         }
 
         [AppSetting]
-        private class Setting5
+        public class SettingsCollections
         {
             public List<string> StringCollection { get; set; }
-            public List<int> IntCollection { get; set; }
-            public List<Option> EnumCollection { get; set; }
+            public IList<int> IntCollection { get; set; }
+            public List<Option> EnumCollection { get; set; } = new List<Option>();
         }
 
-        private enum Option
+        public enum Option
         {
             Option0,
             Option1,

@@ -36,11 +36,8 @@ class MySettings : SingletonSettings&lt;MySettings&gt;
     [AppSetting(SettingType = SettingType.ConnectionString)]
     public IReadOnlyDictionary&lt;string, string&gt; ConnectionStrings { get; set; }
 
-	[AppSetting(SettingType = SettingType.ArrayList)]
-    public IList&ltstring&gt ListOfStrings { get; set; }
-
-	[AppSetting(SettingType = SettingType.ArrayList)]
-    public IList&ltint&gt ListOIntegers { get; set; }
+    [AppSetting]
+    public IList&ltint&gt ListOfIntegers { get; set; }
 
 }</code></pre>
 
@@ -63,9 +60,11 @@ Any problems loading values will be returned in an aggregate exception, unless y
 
 ## What's New?
 
-###Feb 25, 2016
-You can now load array list settings into your setting class. Simply use the AppSetting "SettingType" attribute and set it to ArrayList.
-You can specify the type of the list and load any primitive and enum type into a list.
+###Feb 28, 2016
+You can now load comma-delimited settings into a property type that supports IList&lt;T&gt; where T is a public type.
+If you do not initialize the property with an instance, AppSettingsLoader will create a List&lt;T&gt; for you.
+
+Also fixed a bug with the Optional feature released a week ago. The logic was reversed. Sorry about that!
 
 ###Feb 21, 2016
 In order to prevent bugs due to settings that don't exist at the source, an exception will now be thrown.

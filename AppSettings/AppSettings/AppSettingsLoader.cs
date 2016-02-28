@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -34,7 +33,7 @@ namespace Mash.AppSettings
                 throw new ArgumentNullException(nameof(settingsClass));
             }
 
-            var members = typeof(T).FindMembers(
+            MemberInfo[] members = typeof(T).FindMembers(
                 MemberTypes.Property,
                 BindingFlags.Instance | BindingFlags.Public,
                 HasAttribute,
@@ -44,14 +43,8 @@ namespace Mash.AppSettings
 
             foreach (PropertyInfo member in members)
             {
-                string settingName = member.Name;
-
                 var attr = member.GetCustomAttribute<AppSettingAttribute>();
-                if (attr != null &&
-                    attr.Key != null)
-                {
-                    settingName = attr.Key;
-                }
+                string settingName = attr?.Key ?? member.Name;
 
                 Trace.TraceInformation($"Loading class member [{member.Name}] as [{settingName}].");
 
@@ -104,24 +97,39 @@ namespace Mash.AppSettings
                         continue;
                     }
 
-                    if (IsList(member))
+                    if (IsCollection(member))
                     {
-                        Type itemType = member.PropertyType
-                            .GetGenericArguments()
-                            .First();
+                        var args = member.PropertyType.GetGenericArguments();
+                        if (args.Length > 1)
+                        {
+                            Trace.TraceWarning($"Unsupported property type with {args.Length} generic parameters.");
+                        }
+                        Type itemType = args.First();
 
-                        Type listType = member.PropertyType
-                            .GetGenericTypeDefinition()
-                            .MakeGenericType(itemType);
+                        // Check to see if an instance already exists
+                        dynamic property = member.GetGetMethod().Invoke(settingsClass, null);
+                        if (property == null)
+                        {
+                            // No instance exists so create a List<T>
+                            Type listType = typeof(List<>)
+                                .GetGenericTypeDefinition()
+                                .MakeGenericType(itemType);
 
-                        dynamic list = Activator.CreateInstance(listType);
+                            dynamic instance = Activator.CreateInstance(listType);
+
+                            // Assign the instance to the class property
+                            member.SetValue(settingsClass, instance);
+                            property = instance;
+                        }
 
                         foreach (var item in loadedSetting.Split(','))
                         {
-                            ((IList)list).Add(TypeParser.GetTypedValue(itemType, item));
+                            // There's a dynamic binding issue with non-public types. One fix is to cast to IList to ensure the call to Add succeeds
+                            // but that requires basing this feature off of IList<T> and not ICollection<T>.
+                            // This does not work for ICollection because it does not include the Add method (only ICollection<T> does)
+                            // http://stackoverflow.com/questions/15920844/system-collections-generic-ilistobject-does-not-contain-a-definition-for-ad
+                            property.Add(TypeParser.GetTypedValue(itemType, item));
                         }
-
-                        member.SetValue(settingsClass, list);
                     }
                     else
                     {
@@ -174,13 +182,13 @@ namespace Mash.AppSettings
             return customAttribute?.SettingType == SettingType.Connectionstring;
         }
 
-        private static bool IsList(PropertyInfo member)
+        private static bool IsCollection(PropertyInfo member)
         {
             var interfaces = member.PropertyType.FindInterfaces(
                 (Type t, object o) => t.ToString().StartsWith(o.ToString()),
-                "System.Collections.Generic.IList`1");
+                "System.Collections.Generic.ICollection`1");
 
-            return interfaces.Any() && member.PropertyType.IsClass;
+            return member.PropertyType.Name == "ICollection`1" || interfaces.Any();
         }
 
         private static bool IsSettingRequired(PropertyInfo member)

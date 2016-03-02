@@ -60,6 +60,9 @@ Any problems loading values will be returned in an aggregate exception, unless y
 
 ## What's New?
 
+###March 2, 2016
+Fixed a null reference exception in the app config setting loader when attempting to load a connection string which does not exist.
+
 ###Feb 28, 2016
 You can now load comma-delimited settings into a property type that supports IList&lt;T&gt; where T is a public type.
 If you do not initialize the property with an instance, AppSettingsLoader will create a List&lt;T&gt; for you.

@@ -35,7 +35,7 @@ namespace SampleWebApp.Models
         public IReadOnlyDictionary<string, string> ConnectionStrings { get; set; }
     }
 
-    internal enum EnumValues
+    public enum EnumValues
     {
         Value1 = 1,
         Value2 = 2

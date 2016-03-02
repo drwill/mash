@@ -12,9 +12,6 @@ namespace SampleApp
     {
         public string StringSetting { get; set; }
 
-        [AppSetting(Key = "StringSettingOverride")]
-        public string OverridenSetting { get; set; }
-
         public int IntSetting { get; set; }
 
         public uint UintSetting { get; set; }
@@ -27,24 +24,23 @@ namespace SampleApp
 
         public decimal DecimalSetting { get; set; }
 
-        [AppSetting(SettingType = SettingType.Connectionstring)]
-        public string MyConnectionString1 { get; set; }
-
         public EnumValues EnumSetting { get; set; }
 
         public EnumValues EnumSettingInt { get; set; }
 
+        [AppSetting(Key = "StringSettingOverride")]
+        public string OverridenSetting { get; set; }
+
+        public IList<string> CollectionSetting { get; set; }
+
         [AppSetting(SettingType = SettingType.Connectionstring)]
         public IReadOnlyDictionary<string, string> ConnectionStrings { get; set; }
 
-        [AppSetting]
-        public IList<int> CollectionSettingInt { get; set; }
-
-        [AppSetting]
-        public IList<EnumValues> CollectionSettingEnum { get; set; }
+        [AppSetting(SettingType = SettingType.Connectionstring)]
+        public string MyConnectionString1 { get; set; }
     }
 
-    internal enum EnumValues
+    public enum EnumValues
     {
         Value1 = 1,
         Value2 = 2,

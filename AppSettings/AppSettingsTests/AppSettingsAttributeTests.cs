@@ -30,7 +30,7 @@ namespace Mash.AppSettings.Tests
 
         private static string GetKey(string propertyName, string attributeMemberName)
         {
-            var test = new TestSettings();
+            var test = new SettingsWithAttributes();
             var defaultProperty = test.GetType().GetProperty(propertyName);
             var appSettingAttribute = defaultProperty.CustomAttributes
                 .Where(a => a.AttributeType == typeof(AppSettingAttribute))
@@ -44,7 +44,7 @@ namespace Mash.AppSettings.Tests
                 null;
         }
 
-        private class TestSettings
+        private class SettingsWithAttributes
         {
             [AppSetting]
             public int Default { get; set; }

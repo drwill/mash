@@ -1,5 +1,7 @@
 ﻿using Mash.AppSettings;
 using System;
+using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -17,8 +19,7 @@ namespace SampleApp
 
             foreach (PropertyInfo member in members)
             {
-                if (member == null ||
-                    member.GetValue(settings) == null)
+                if (member?.GetValue(settings) == null)
                 {
                     Console.WriteLine($"[{member.Name}] is [null]");
                 }
@@ -30,11 +31,27 @@ namespace SampleApp
                         Console.WriteLine($"\t[{item.Key}] = [{item.Value}]");
                     }
                 }
+                else if (IsCollection(member))
+                {
+                    foreach (dynamic item in (ICollection<string>)member.GetValue(settings))
+                    {
+                        Console.WriteLine($"{member.Name}: {item}");
+                    }
+                }
                 else
                 {
                     Console.WriteLine($"Setting [{member.Name}] is [{member.GetValue(settings)}]");
                 }
             }
+        }
+
+        private static bool IsCollection(PropertyInfo member)
+        {
+            var interfaces = member.PropertyType.FindInterfaces(
+                (Type t, object o) => t.ToString().StartsWith(o.ToString()),
+                "System.Collections.Generic.ICollection`1");
+
+            return member.PropertyType.Name == "ICollection`1" || interfaces.Any();
         }
 
         private static bool HasAttribute(MemberInfo mi, object o)

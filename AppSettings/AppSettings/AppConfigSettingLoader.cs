@@ -20,7 +20,7 @@ namespace Mash.AppSettings
         {
             if (String.IsNullOrWhiteSpace(settingKey))
             {
-                throw new ArgumentNullException("settingName");
+                throw new ArgumentNullException(nameof(settingKey));
             }
 
             return ConfigurationManager.AppSettings[settingKey];
@@ -35,10 +35,10 @@ namespace Mash.AppSettings
         {
             if (String.IsNullOrWhiteSpace(connectionStringKey))
             {
-                throw new ArgumentNullException("connectionStringKey");
+                throw new ArgumentNullException(nameof(connectionStringKey));
             }
 
-            return ConfigurationManager.ConnectionStrings[connectionStringKey].ConnectionString;
+            return ConfigurationManager.ConnectionStrings[connectionStringKey]?.ConnectionString;
         }
 
         /// <summary>

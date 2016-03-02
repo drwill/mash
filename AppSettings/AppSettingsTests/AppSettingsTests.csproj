@@ -52,6 +52,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="AppConfigSettingLoaderTests.cs" />
     <Compile Include="AppSettingsAttributeTests.cs" />
     <Compile Include="AppSettingsLoaderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -193,9 +193,11 @@ namespace Mash.AppSettings
 
         private static bool IsSettingRequired(PropertyInfo member)
         {
-            var customAttribute = member.GetCustomAttribute<AppSettingAttribute>();
+            bool? isOptionalOnMember = member.GetCustomAttribute<AppSettingAttribute>()?.Optional;
+            bool? isOptionalOnClass = member.DeclaringType.GetCustomAttribute<AppSettingAttribute>()?.Optional;
 
-            return customAttribute?.Optional == false;
+            return !(isOptionalOnMember.HasValue && isOptionalOnMember.Value == true) &&
+                !(isOptionalOnClass.HasValue && isOptionalOnClass.Value == true);
         }
 
         private static bool CheckIfSettingIsValid(string loadedValue, string settingName)

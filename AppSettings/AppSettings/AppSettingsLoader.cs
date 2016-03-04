@@ -46,11 +46,11 @@ namespace Mash.AppSettings
                 var attr = member.GetCustomAttribute<AppSettingAttribute>();
                 string settingName = attr?.Key ?? member.Name;
 
-                Trace.TraceInformation($"Loading class member [{member.Name}] as [{settingName}].");
+                Trace.TraceInformation($"Mash.AppSettings: Loading class member [{member.Name}] as [{settingName}].");
 
                 if (!member.CanWrite)
                 {
-                    Trace.TraceWarning($"Property [{settingsClass.GetType()}.{member.Name}] is not writeable; skipping.");
+                    Trace.TraceWarning($"Mash.AppSettings: Property [{settingsClass.GetType()}.{member.Name}] is not writeable; skipping.");
                     continue;
                 }
 
@@ -59,7 +59,7 @@ namespace Mash.AppSettings
                     // Check if the property is meant to load all of the connection strings
                     if (IsSupportedConnectionStringsType(member))
                     {
-                        Trace.TraceInformation($"Loading all connection strings into [{member.Name}].");
+                        Trace.TraceInformation($"Mash.AppSettings: Loading all connection strings into [{member.Name}].");
                         member.SetValue(settingsClass, settingLoader.GetConnectionStrings());
                         continue;
                     }
@@ -102,7 +102,7 @@ namespace Mash.AppSettings
                         var args = member.PropertyType.GetGenericArguments();
                         if (args.Length > 1)
                         {
-                            Trace.TraceWarning($"Unsupported property type with {args.Length} generic parameters.");
+                            Trace.TraceWarning($"Mash.AppSettings: Unsupported property type with {args.Length} generic parameters.");
                         }
                         Type itemType = args.First();
 
@@ -139,7 +139,7 @@ namespace Mash.AppSettings
                 }
                 catch (Exception ex)
                 {
-                    Trace.TraceError($"Loading of setting [{settingName}] failed with:\r\n{ex}.");
+                    Trace.TraceError($"Mash.AppSettings: Loading of setting [{settingName}] failed with:\r\n{ex}.");
                     exceptions.Add(ex);
                 }
             }
@@ -147,7 +147,7 @@ namespace Mash.AppSettings
             if (exceptions.Any())
             {
                 throw new AggregateException(
-                    $"{exceptions.Count} errors loading settings.",
+                    $"Mash.AppSettings: {exceptions.Count} errors loading settings.",
                     exceptions);
             }
 
@@ -204,7 +204,7 @@ namespace Mash.AppSettings
         {
             if (String.IsNullOrEmpty(loadedValue))
             {
-                Trace.TraceWarning($"No value found for [{settingName}].");
+                Trace.TraceWarning($"Mash.AppSettings: No value found for [{settingName}].");
                 return false;
             }
 

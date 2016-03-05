@@ -47,8 +47,11 @@
     <Compile Include="AppSettingsLoader.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="ISettingLoader.cs" />
+    <Compile Include="PocoSettingTypeLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingType.cs" />
+    <Compile Include="SettingTypeLoaderBase.cs" />
+    <Compile Include="SettingTypeModel.cs" />
     <Compile Include="SingletonSettings.cs" />
     <Compile Include="TypeParser.cs" />
   </ItemGroup>

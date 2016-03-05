@@ -86,8 +86,8 @@ namespace Mash.AppSettings
                     }
 
                     // Load normal setting types
-                    var loadedSetting = settingLoader.GetSetting(settingName);
-                    if (!CheckIfSettingIsValid(loadedSetting, settingName))
+                    var loadedValue = settingLoader.GetSetting(settingName);
+                    if (!CheckIfSettingIsValid(loadedValue, settingName))
                     {
                         if (IsSettingRequired(member))
                         {
@@ -122,7 +122,7 @@ namespace Mash.AppSettings
                             property = instance;
                         }
 
-                        foreach (var item in loadedSetting.Split(','))
+                        foreach (var item in loadedValue.Split(','))
                         {
                             // There's a dynamic binding issue with non-public types. One fix is to cast to IList to ensure the call to Add succeeds
                             // but that requires basing this feature off of IList<T> and not ICollection<T>.
@@ -133,8 +133,16 @@ namespace Mash.AppSettings
                     }
                     else
                     {
-                        var parsedSetting = TypeParser.GetTypedValue(member.PropertyType, loadedSetting);
-                        member.SetValue(settingsClass, parsedSetting);
+                        var model = new SettingTypeModel
+                        {
+                            SettingsClass = settingsClass,
+                            Member = member,
+                            SettingName = settingName,
+                            LoadedValue = loadedValue,
+                        };
+
+                        var pocoLoader = new PocoSettingTypeLoader();
+                        pocoLoader.DoWork(model);
                     }
                 }
                 catch (Exception ex)

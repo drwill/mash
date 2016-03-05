@@ -56,35 +56,6 @@ namespace Mash.AppSettings
 
                 try
                 {
-                    // Check if the property is meant to load all of the connection strings
-                    if (IsSupportedConnectionStringsType(member))
-                    {
-                        Trace.TraceInformation($"Mash.AppSettings: Loading all connection strings into [{member.Name}].");
-                        member.SetValue(settingsClass, settingLoader.GetConnectionStrings());
-                        continue;
-                    }
-
-                    // Check if the property is meant to load a specific connection string
-                    if (IsConnectionStringSettingType(member))
-                    {
-                        Trace.TraceInformation($"Loading connection string into [{member.Name}].");
-                        var loadedConnectionString = settingLoader.GetConnectionString(settingName);
-                        if (!CheckIfSettingIsValid(loadedConnectionString, settingName))
-                        {
-                            if (IsSettingRequired(member))
-                            {
-                                exceptions.Add(new ArgumentException("The connection string could not be found.", settingName));
-                            }
-
-                            continue;
-                        }
-
-                        var parsedConnectionString = TypeParser.GetTypedValue(member.PropertyType, loadedConnectionString);
-                        member.SetValue(settingsClass, parsedConnectionString);
-
-                        continue;
-                    }
-
                     var model = new SettingTypeModel
                     {
                         SettingLoader = settingLoader,
@@ -122,52 +93,17 @@ namespace Mash.AppSettings
             return mi.GetCustomAttribute<AppSettingAttribute>() != null;
         }
 
-        private static bool IsSupportedConnectionStringsType(PropertyInfo member)
+        private static SettingTypeLoaderBase BuildSettingTypeLoaders()
         {
-            if (IsConnectionStringSettingType(member) &&
-                member.PropertyType == typeof(IReadOnlyDictionary<string, string>))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        private static bool IsConnectionStringSettingType(PropertyInfo member)
-        {
-            var customAttribute = member.GetCustomAttribute<AppSettingAttribute>();
-
-            return customAttribute?.SettingType == SettingType.Connectionstring;
-        }
-
-        private static bool IsSettingRequired(PropertyInfo member)
-        {
-            bool? isOptionalOnMember = member.GetCustomAttribute<AppSettingAttribute>()?.Optional;
-            bool? isOptionalOnClass = member.DeclaringType.GetCustomAttribute<AppSettingAttribute>()?.Optional;
-
-            return !(isOptionalOnMember.HasValue && isOptionalOnMember.Value == true) &&
-                !(isOptionalOnClass.HasValue && isOptionalOnClass.Value == true);
-        }
-
-        private static bool CheckIfSettingIsValid(string loadedValue, string settingName)
-        {
-            if (String.IsNullOrEmpty(loadedValue))
-            {
-                Trace.TraceWarning($"Mash.AppSettings: No value found for [{settingName}].");
-                return false;
-            }
-
-            return true;
-        }
-
-        private static SettingTypeLoaderBase AddSettingTypeLoaders()
-        {
-
             var poco = new PocoSettingTypeLoader();
             var coll = new CollectionTypeLoader { Next = poco };
+            var cs = new ConnectionStringTypeLoader { Next = coll };
+            var conns = new ConnectionStringsTypeLoader { Next = cs };
 
             var loaders = new List<SettingTypeLoaderBase>
             {
+                conns,
+                cs,
                 coll,
                 poco,
             };
@@ -175,6 +111,6 @@ namespace Mash.AppSettings
             return loaders.First();
         }
 
-        private static SettingTypeLoaderBase _settingTypeLoaders = AddSettingTypeLoaders();
+        private static SettingTypeLoaderBase _settingTypeLoaders = BuildSettingTypeLoaders();
     }
 }

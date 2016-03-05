@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 
@@ -63,6 +64,24 @@ namespace Mash.AppSettings
             }
 
             return true;
+        }
+
+        protected static bool IsSupportedConnectionStringsType(PropertyInfo member)
+        {
+            if (IsConnectionStringSettingType(member) &&
+                member.PropertyType == typeof(IReadOnlyDictionary<string, string>))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        protected static bool IsConnectionStringSettingType(PropertyInfo member)
+        {
+            var customAttribute = member.GetCustomAttribute<AppSettingAttribute>();
+
+            return customAttribute?.SettingType == SettingType.Connectionstring;
         }
     }
 }

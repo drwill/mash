@@ -97,53 +97,15 @@ namespace Mash.AppSettings
                         continue;
                     }
 
-                    if (IsCollection(member))
+                    var model = new SettingTypeModel
                     {
-                        var args = member.PropertyType.GetGenericArguments();
-                        if (args.Length > 1)
-                        {
-                            Trace.TraceWarning($"Mash.AppSettings: Unsupported property type with {args.Length} generic parameters.");
-                        }
-                        Type itemType = args.First();
+                        SettingsClass = settingsClass,
+                        Member = member,
+                        SettingName = settingName,
+                        LoadedValue = loadedValue,
+                    };
 
-                        // Check to see if an instance already exists
-                        dynamic property = member.GetGetMethod().Invoke(settingsClass, null);
-                        if (property == null)
-                        {
-                            // No instance exists so create a List<T>
-                            Type listType = typeof(List<>)
-                                .GetGenericTypeDefinition()
-                                .MakeGenericType(itemType);
-
-                            dynamic instance = Activator.CreateInstance(listType);
-
-                            // Assign the instance to the class property
-                            member.SetValue(settingsClass, instance);
-                            property = instance;
-                        }
-
-                        foreach (var item in loadedValue.Split(','))
-                        {
-                            // There's a dynamic binding issue with non-public types. One fix is to cast to IList to ensure the call to Add succeeds
-                            // but that requires basing this feature off of IList<T> and not ICollection<T>.
-                            // This does not work for ICollection because it does not include the Add method (only ICollection<T> does)
-                            // http://stackoverflow.com/questions/15920844/system-collections-generic-ilistobject-does-not-contain-a-definition-for-ad
-                            property.Add(TypeParser.GetTypedValue(itemType, item));
-                        }
-                    }
-                    else
-                    {
-                        var model = new SettingTypeModel
-                        {
-                            SettingsClass = settingsClass,
-                            Member = member,
-                            SettingName = settingName,
-                            LoadedValue = loadedValue,
-                        };
-
-                        var pocoLoader = new PocoSettingTypeLoader();
-                        pocoLoader.DoWork(model);
-                    }
+                    _settingTypeLoaders.First().DoWork(model);
                 }
                 catch (Exception ex)
                 {
@@ -190,15 +152,6 @@ namespace Mash.AppSettings
             return customAttribute?.SettingType == SettingType.Connectionstring;
         }
 
-        private static bool IsCollection(PropertyInfo member)
-        {
-            var interfaces = member.PropertyType.FindInterfaces(
-                (Type t, object o) => t.ToString().StartsWith(o.ToString()),
-                "System.Collections.Generic.ICollection`1");
-
-            return member.PropertyType.Name == "ICollection`1" || interfaces.Any();
-        }
-
         private static bool IsSettingRequired(PropertyInfo member)
         {
             bool? isOptionalOnMember = member.GetCustomAttribute<AppSettingAttribute>()?.Optional;
@@ -218,5 +171,22 @@ namespace Mash.AppSettings
 
             return true;
         }
+
+        private static IEnumerable<SettingTypeLoaderBase> AddSettingTypeLoaders()
+        {
+
+            var poco = new PocoSettingTypeLoader();
+            var coll = new CollectionTypeLoader { Next = poco };
+
+            var loaders = new List<SettingTypeLoaderBase>
+            {
+                coll,
+                poco,
+            };
+
+            return loaders;
+        }
+
+        private static IEnumerable<SettingTypeLoaderBase> _settingTypeLoaders = AddSettingTypeLoaders();
     }
 }

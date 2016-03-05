@@ -85,27 +85,15 @@ namespace Mash.AppSettings
                         continue;
                     }
 
-                    // Load normal setting types
-                    var loadedValue = settingLoader.GetSetting(settingName);
-                    if (!CheckIfSettingIsValid(loadedValue, settingName))
-                    {
-                        if (IsSettingRequired(member))
-                        {
-                            exceptions.Add(new ArgumentException("The setting could not be found.", settingName));
-                        }
-
-                        continue;
-                    }
-
                     var model = new SettingTypeModel
                     {
+                        SettingLoader = settingLoader,
                         SettingsClass = settingsClass,
                         Member = member,
                         SettingName = settingName,
-                        LoadedValue = loadedValue,
                     };
 
-                    _settingTypeLoaders.First().DoWork(model);
+                    _settingTypeLoaders.DoWork(model);
                 }
                 catch (Exception ex)
                 {
@@ -172,7 +160,7 @@ namespace Mash.AppSettings
             return true;
         }
 
-        private static IEnumerable<SettingTypeLoaderBase> AddSettingTypeLoaders()
+        private static SettingTypeLoaderBase AddSettingTypeLoaders()
         {
 
             var poco = new PocoSettingTypeLoader();
@@ -184,9 +172,9 @@ namespace Mash.AppSettings
                 poco,
             };
 
-            return loaders;
+            return loaders.First();
         }
 
-        private static IEnumerable<SettingTypeLoaderBase> _settingTypeLoaders = AddSettingTypeLoaders();
+        private static SettingTypeLoaderBase _settingTypeLoaders = AddSettingTypeLoaders();
     }
 }

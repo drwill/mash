@@ -38,7 +38,13 @@ namespace Mash.AppSettings
                 property = instance;
             }
 
-            foreach (var item in model.LoadedValue.Split(','))
+            var loadedValue = LoadValue(model);
+            if (loadedValue == null)
+            {
+                return false;
+            }
+
+            foreach (var item in loadedValue.Split(','))
             {
                 // There's a dynamic binding issue with non-public types. One fix is to cast to IList to ensure the call to Add succeeds
                 // but that requires basing this feature off of IList<T> and not ICollection<T>.

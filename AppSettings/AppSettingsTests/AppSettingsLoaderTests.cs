@@ -239,24 +239,14 @@ namespace Mash.AppSettings.Tests
                 "Enum collection not set");
         }
 
+        [AppSetting(Optional = true)]
         public class SettingsPrimitives
         {
-            [AppSetting(Optional = true)]
             public bool IsTrue { get; set; }
-
-            [AppSetting(Optional = true)]
             public int Is42 { get; set; }
-
-            [AppSetting(Optional = true)]
             public string IsFoobar { get; set; }
-
-            [AppSetting(Optional = true)]
             public DateTime IsToday { get; set; }
-
-            [AppSetting(Optional = true)]
             public Guid IsGuid { get; set; }
-
-            [AppSetting(Optional = true)]
             public Option IsOption2 { get; set; }
         }
 

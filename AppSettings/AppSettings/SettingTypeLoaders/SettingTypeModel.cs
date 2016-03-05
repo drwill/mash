@@ -4,9 +4,9 @@ namespace Mash.AppSettings
 {
     internal class SettingTypeModel
     {
-        public dynamic SettingsClass { get; set; }
-        public PropertyInfo Member { get; set; }
-        public string SettingName { get; set; }
-        public string LoadedValue { get; set; }
+        internal ISettingLoader SettingLoader { get; set; }
+        internal dynamic SettingsClass { get; set; }
+        internal PropertyInfo Member { get; set; }
+        internal string SettingName { get; set; }
     }
 }

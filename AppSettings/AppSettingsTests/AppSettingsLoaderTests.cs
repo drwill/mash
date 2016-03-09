@@ -178,13 +178,23 @@ namespace Mash.AppSettings.Tests
         }
 
         [TestMethod]
-        public void AppSettingsLoader_Load_NoExceptionIfOptionalSettingDoesNotExist()
+        public void AppSettingsLoader_Load_NoExceptionIfHasOptionalSetting()
         {
             var mockSettingsLoader = new SettingLoaderMock();
             // Set the required setting to avoid the exception, but don't set the optional setting
             mockSettingsLoader.Settings.Add("RequiredSetting", "Exists");
 
             var settings = new SettingsOptional();
+
+            AppSettingsLoader.Load(mockSettingsLoader, ref settings);
+        }
+
+        [TestMethod]
+        public void AppSettingsLoader_Load_NoExceptionIfHasOptionalSettingOnClass()
+        {
+            var mockSettingsLoader = new SettingLoaderMock();
+
+            var settings = new SettingsOptionalClass();
 
             AppSettingsLoader.Load(mockSettingsLoader, ref settings);
         }
@@ -229,24 +239,14 @@ namespace Mash.AppSettings.Tests
                 "Enum collection not set");
         }
 
+        [AppSetting(Optional = true)]
         public class SettingsPrimitives
         {
-            [AppSetting(Optional = true)]
             public bool IsTrue { get; set; }
-
-            [AppSetting(Optional = true)]
             public int Is42 { get; set; }
-
-            [AppSetting(Optional = true)]
             public string IsFoobar { get; set; }
-
-            [AppSetting(Optional = true)]
             public DateTime IsToday { get; set; }
-
-            [AppSetting(Optional = true)]
             public Guid IsGuid { get; set; }
-
-            [AppSetting(Optional = true)]
             public Option IsOption2 { get; set; }
         }
 
@@ -281,6 +281,12 @@ namespace Mash.AppSettings.Tests
 
             [AppSetting]
             public string RequiredSetting { get; set; }
+        }
+
+        [AppSetting(Optional = true)]
+        public class SettingsOptionalClass
+        {
+            public string OptionalSetting { get; set; }
         }
 
         [AppSetting]

@@ -60,6 +60,9 @@ Any problems loading values will be returned in an aggregate exception, unless y
 
 ## What's New?
 
+###March 5, 2016
+The Optional setting can be applied to the class level and will be inherited by all members, unless otherwise specified on the property.
+
 ###March 2, 2016
 Fixed a null reference exception in the app config setting loader when attempting to load a connection string which does not exist.
 

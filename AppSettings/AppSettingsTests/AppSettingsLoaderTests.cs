@@ -101,7 +101,7 @@ namespace Mash.AppSettings.Tests
         }
 
         [TestMethod]
-        public void AppSetingsLoader_Load_LoadsAConnectionString()
+        public void AppSettingsLoader_Load_LoadsAConnectionString()
         {
             var connectionStringName = "SingleConnectionString";
             var connectionStringValue = "ConnectionStringValue";
@@ -116,7 +116,7 @@ namespace Mash.AppSettings.Tests
         }
 
         [TestMethod]
-        public void AppSetingsLoader_Load_LoadsConnectionStringsWhenPropertyIsDecoratedWithConnectionString()
+        public void AppSettingsLoader_Load_LoadsConnectionStringsWhenPropertyIsDecoratedWithConnectionString()
         {
             var connectionStringName = "Name";
             var connectionStringValue = "Value";
@@ -128,6 +128,17 @@ namespace Mash.AppSettings.Tests
 
             Assert.IsTrue(AppSettingsLoader.Load(mockSettingLoader, ref settings), "Load returned flase");
             Assert.IsTrue(settings.ConnectionStrings.ContainsKey(connectionStringName));
+        }
+
+        [TestMethod]
+        public void AppSettingsLoader_Load_NoExceptionWhenClassOptional()
+        {
+            var mockSettingsLoader = new SettingLoaderMock();
+            var settings = new SettingsOptionalConnectionString();
+
+            // Should not throw an exception
+            AppSettingsLoader.Load(mockSettingsLoader, ref settings);
+            Assert.IsNull(settings.ConnectionString);
         }
 
         [TestMethod]
@@ -252,14 +263,20 @@ namespace Mash.AppSettings.Tests
 
         public class SettingsConnectionString
         {
-            [AppSetting(SettingType = SettingType.Connectionstring)]
+            [AppSetting(SettingType = SettingType.ConnectionString)]
             public string SingleConnectionString { get; set; }
         }
 
         public class SettingsConnectionStrings
         {
-            [AppSetting(SettingType = SettingType.Connectionstring)]
+            [AppSetting(SettingType = SettingType.ConnectionString)]
             public IReadOnlyDictionary<string, string> ConnectionStrings { get; set; }
+        }
+
+        public class SettingsOptionalConnectionString
+        {
+            [AppSetting(SettingType = SettingType.ConnectionString, Optional = true)]
+            public string ConnectionString { get; set; }
         }
 
         [AppSetting]

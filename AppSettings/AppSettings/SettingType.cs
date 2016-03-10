@@ -6,6 +6,6 @@
     public enum SettingType
     {
         Setting,
-        Connectionstring,
+        ConnectionString,
     }
 }

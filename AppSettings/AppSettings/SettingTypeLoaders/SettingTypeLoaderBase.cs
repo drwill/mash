@@ -92,7 +92,7 @@ namespace Mash.AppSettings
         {
             var customAttribute = member.GetCustomAttribute<AppSettingAttribute>();
 
-            return customAttribute?.SettingType == SettingType.Connectionstring;
+            return customAttribute?.SettingType == SettingType.ConnectionString;
         }
     }
 }

@@ -31,7 +31,7 @@ namespace SampleWebApp.Models
 
         public EnumValues EnumSettingInt { get; set; }
 
-        [AppSetting(SettingType = SettingType.Connectionstring)]
+        [AppSetting(SettingType = SettingType.ConnectionString)]
         public IReadOnlyDictionary<string, string> ConnectionStrings { get; set; }
     }
 

@@ -33,10 +33,10 @@ namespace SampleApp
 
         public IList<string> CollectionSetting { get; set; }
 
-        [AppSetting(SettingType = SettingType.Connectionstring)]
+        [AppSetting(SettingType = SettingType.ConnectionString)]
         public IReadOnlyDictionary<string, string> ConnectionStrings { get; set; }
 
-        [AppSetting(SettingType = SettingType.Connectionstring)]
+        [AppSetting(SettingType = SettingType.ConnectionString)]
         public string MyConnectionString1 { get; set; }
     }
 

@@ -13,6 +13,11 @@ namespace Mash.Chronograph
         public string Name { get; internal set; }
 
         /// <summary>
+        /// The latest measured lap
+        /// </summary>
+        public TimeSpan Latest { get; internal set; }
+
+        /// <summary>
         /// The number of measures
         /// </summary>
         public uint Laps { get; internal set; }
@@ -23,7 +28,7 @@ namespace Mash.Chronograph
         public TimeSpan Sum { get; internal set; }
 
         /// <summary>
-        /// The average duration of each capture in milliseconds
+        /// The average duration of each lap in milliseconds
         /// </summary>
         public TimeSpan Mean
         {
@@ -66,6 +71,8 @@ namespace Mash.Chronograph
             lock (_statisticsLock)
             {
                 SessionEndUtc = DateTimeOffset.UtcNow;
+
+                Latest = duration;
 
                 ++Laps;
 

@@ -13,7 +13,7 @@ namespace Mash.Chronograph
         bool IsRunning { get; }
 
         /// <summary>
-        /// The statistics for the current interval
+        /// The statistics for the current session
         /// </summary>
         Session ActiveSession { get; }
 

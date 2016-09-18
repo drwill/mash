@@ -3,4 +3,4 @@
 
 [AppSettings loader](/AppSettings/)
 
-In alpha: [Timekeeper](/Timekeeper/)
+In beta: [Chronograph](/Chronograph/)

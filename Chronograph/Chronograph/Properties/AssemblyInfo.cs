@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("Mash Timekeeper")]
 [assembly: AssemblyDescription("Keeps track of elapsed time, iteration count, max, and average time spent for a given operation")]
-[assembly: AssemblyProduct("Mash.Timekeeper")]
+[assembly: AssemblyProduct("Mash.Chronograph")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -30,4 +30,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("0.1.*")]
 [assembly: AssemblyFileVersion("0.1.0.0")]
 
-[assembly: InternalsVisibleTo("Mash.Timekeeper.Tests")]
+[assembly: InternalsVisibleTo("Mash.Chronograph.Tests")]

@@ -1,0 +1,75 @@
+﻿using System;
+using System.Diagnostics;
+
+namespace Mash.Chronograph
+{
+    /// <summary>
+    /// An implementation of IChronograph based on the System.Diagnostics.Stopwatch
+    /// </summary>
+    internal class StopwatchChronograph : IChronograph
+    {
+        public string Name { get; set; }
+
+        public Session ActiveSession { get; private set; }
+
+        public bool IsRunning { get { return _stopwatch.IsRunning; } }
+
+        public void Start()
+        {
+            lock (_lockObject)
+            {
+                if (IsRunning)
+                {
+                    throw new InvalidOperationException("The chrono is currenting running so it cannot be started.");
+                }
+
+                _stopwatch.Restart();
+            }
+        }
+
+        public void Stop()
+        {
+            lock(_lockObject)
+            {
+                if (!IsRunning)
+                {
+                    throw new InvalidOperationException("The chrono is not currenting running so it cannot be stopped.");
+                }
+
+                _stopwatch.Stop();
+                ActiveSession.AddLap(_stopwatch.Elapsed);
+            }
+        }
+
+        public void MeasureAction(Action theAction)
+        {
+            var stopwatch = new Stopwatch();
+
+            stopwatch.Start();
+            theAction();
+            stopwatch.Stop();
+
+            ActiveSession.AddLap(stopwatch.Elapsed);
+        }
+
+        public Session Restart()
+        {
+            lock (_lockObject)
+            {
+                var snapshot = ActiveSession;
+                ActiveSession = new Session(Name);
+
+                return snapshot;
+            }
+        }
+
+        internal StopwatchChronograph(string name)
+        {
+            Name = name;
+            ActiveSession = new Session(Name);
+        }
+
+        private readonly Stopwatch _stopwatch = new Stopwatch();
+        private readonly object _lockObject = new object();
+    }
+}

@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timekeeper", "Timekeeper\Timekeeper.csproj", "{D283B21B-1E10-4C18-BE04-A315DF5F3896}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chronograph", "Timekeeper\Chronograph.csproj", "{D283B21B-1E10-4C18-BE04-A315DF5F3896}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApp", "SampleApp\SampleApp.csproj", "{CA0CC0A7-B6C9-4F87-8161-F8B38F6FDFEE}"
 EndProject

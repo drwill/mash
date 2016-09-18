@@ -1,44 +1,44 @@
 ﻿using System;
 
-namespace Mash.Timekeeper
+namespace Mash.Chronograph
 {
     /// <summary>
     /// Keeps track of elapsed time, iteration count, max, and average time spent for a given operation
     /// </summary>
-    public interface ITimekeeper
+    public interface IChronograph
     {
         /// <summary>
-        /// Whether or not the timer is running
+        /// Whether or not the chrono is running
         /// </summary>
         bool IsRunning { get; }
 
         /// <summary>
         /// The statistics for the current interval
         /// </summary>
-        TimekeeperSnapshot TimerStatistics { get; }
+        Session ActiveSession { get; }
 
         /// <summary>
         /// Starts the time keeper
         /// </summary>
-        /// <remarks>For threadsafe starting and stopping of the timer, use the Capture method instead</remarks>
-        void StartCapture();
+        /// <remarks>For threadsafe starting and stopping of the chrono, use the Capture method instead</remarks>
+        void Start();
 
         /// <summary>
         /// Stops the time keeper
         /// </summary>
-        /// <remarks>For threadsafe starting and stopping of the timer, use the Capture method instead</remarks>
-        void StopCapture();
+        /// <remarks>For threadsafe starting and stopping of the chrono, use the Capture method instead</remarks>
+        void Stop();
 
         /// <summary>
-        /// Captures the duration of the specified action, and updates the timer statistics in a threadsafe way
+        /// Measures the duration of the specified action, and updates the chrono statistics in a threadsafe way
         /// </summary>
         /// <param name="theAction">The action to capture</param>
-        void Capture(Action theAction);
+        void MeasureAction(Action theAction);
 
         /// <summary>
-        /// Takes a snapshot of the timer statistics and starts fresh for a new interval
+        /// Takes a snapshot of the chrono statistics and starts a fresh session
         /// </summary>
         /// <returns>A snapshot of the time statistics</returns>
-        TimekeeperSnapshot Snapshot();
+        Session Restart();
     }
 }

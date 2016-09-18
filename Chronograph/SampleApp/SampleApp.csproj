@@ -50,7 +50,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Timekeeper\Chronograph.csproj">
+    <ProjectReference Include="..\Chronograph\Chronograph.csproj">
       <Project>{d283b21b-1e10-4c18-be04-a315df5f3896}</Project>
       <Name>Chronograph</Name>
     </ProjectReference>

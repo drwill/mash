@@ -5,8 +5,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Mash Timekeeper")]
-[assembly: AssemblyDescription("Keeps track of elapsed time, iteration count, max, and average time spent for a given operation")]
+[assembly: AssemblyTitle("Mash Chronograph")]
+[assembly: AssemblyDescription("Keeps track of elapsed time, iteration count, max, and mean time spent for a given operation")]
 [assembly: AssemblyProduct("Mash.Chronograph")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 

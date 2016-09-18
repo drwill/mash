@@ -1,1 +1,1 @@
-nuget pack Timekeeper.csproj -Build -Properties "Configuration=Release"
+nuget pack Chronograph.csproj -Build -Properties "Configuration=Release"

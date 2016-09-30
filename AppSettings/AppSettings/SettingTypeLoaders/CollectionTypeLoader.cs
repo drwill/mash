@@ -8,6 +8,8 @@ namespace Mash.AppSettings
 {
     internal class CollectionTypeLoader : SettingTypeLoaderBase
     {
+        private static char[] _separators = new[] { ',', ';' };
+
         internal override bool DoWork(SettingTypeModel model)
         {
             if (!IsCollection(model.Member))
@@ -44,13 +46,13 @@ namespace Mash.AppSettings
                 return false;
             }
 
-            foreach (var item in loadedValue.Split(','))
+            foreach (var item in loadedValue.Split(_separators, StringSplitOptions.RemoveEmptyEntries))
             {
                 // There's a dynamic binding issue with non-public types. One fix is to cast to IList to ensure the call to Add succeeds
                 // but that requires basing this feature off of IList<T> and not ICollection<T>.
                 // This does not work for ICollection because it does not include the Add method (only ICollection<T> does)
                 // http://stackoverflow.com/questions/15920844/system-collections-generic-ilistobject-does-not-contain-a-definition-for-ad
-                property.Add(TypeParser.GetTypedValue(itemType, item));
+                property.Add(TypeParser.GetTypedValue(itemType, item.Trim()));
             }
 
             return true;

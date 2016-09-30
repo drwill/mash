@@ -222,7 +222,7 @@ namespace Mash.AppSettings.Tests
         }
 
         [TestMethod]
-        public void AppSettingsLoader_Load_LoadsCollection()
+        public void AppSettingsLoader_Load_CollectionHandlesTypes()
         {
             var mockSettingsLoader = new SettingLoaderMock();
 
@@ -248,6 +248,45 @@ namespace Mash.AppSettings.Tests
                 mockSettingsLoader.Settings["EnumCollection"].Split(',').Select(e => Enum.Parse(typeof(Option), e, false)).ToArray(),
                 settings.EnumCollection.ToArray(),
                 "Enum collection not set");
+        }
+
+        [TestMethod]
+        public void AppSettings_Load_CollectionSplitsSemiColons()
+        {
+            string[] values = new[] { "one", "two", "three" };
+            var mockSettingsLoader = new SettingLoaderMock();
+            mockSettingsLoader.Settings.Add("Values", String.Join(";", values));
+
+            var settings = new ListVarieties();
+            Assert.IsTrue(AppSettingsLoader.Load(mockSettingsLoader, ref settings), "Load returned false");
+
+            CollectionAssert.AreEqual(values, settings.Values);
+        }
+
+        [TestMethod]
+        public void AppSettings_Load_CollectionSplitsCommas()
+        {
+            string[] values = new[] { "one", "two", "three" };
+            var mockSettingsLoader = new SettingLoaderMock();
+            mockSettingsLoader.Settings.Add("Values", String.Join(",", values));
+
+            var settings = new ListVarieties();
+            Assert.IsTrue(AppSettingsLoader.Load(mockSettingsLoader, ref settings), "Load returned false");
+
+            CollectionAssert.AreEqual(values, settings.Values);
+        }
+
+        [TestMethod]
+        public void AppSettings_Load_CollectionHandlesSpaces()
+        {
+            string[] values = new[] { "one", "two", "three" };
+            var mockSettingsLoader = new SettingLoaderMock();
+            mockSettingsLoader.Settings.Add("Values", String.Join(", ", values));
+
+            var settings = new ListVarieties();
+            Assert.IsTrue(AppSettingsLoader.Load(mockSettingsLoader, ref settings), "Load returned false");
+
+            CollectionAssert.AreEqual(values, settings.Values);
         }
 
         [AppSetting(Optional = true)]
@@ -312,6 +351,12 @@ namespace Mash.AppSettings.Tests
             public List<string> StringCollection { get; set; }
             public IList<int> IntCollection { get; set; }
             public List<Option> EnumCollection { get; set; } = new List<Option>();
+        }
+
+        [AppSetting]
+        public class ListVarieties
+        {
+            public List<string> Values { get; set; }
         }
 
         public enum Option

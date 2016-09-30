@@ -60,6 +60,9 @@ Any problems loading values will be returned in an aggregate exception, unless y
 
 ## What's New?
 
+###September 29, 2016
+Loading a list now handles semi-colons as well as commas. It also trims whitespace around entries.
+
 ###March 8, 2016
 The Optional setting can be applied to the class level and will be inherited by all members, unless otherwise specified on the property.
 

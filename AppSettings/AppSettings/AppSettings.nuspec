@@ -11,7 +11,7 @@
     <iconUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Simple_cog.svg/120px-Simple_cog.svg.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>The Optional setting can be applied to the class level and will be inherited by all members, unless otherwise specified on the property.</releaseNotes>
+    <releaseNotes>List values can now be separated by semi-colons as well as commas, and the entries are trimmed for whitespace.</releaseNotes>
     <copyright>Copyright 2015</copyright>
     <tags>application settings loader app.config web.config</tags>
   </metadata>

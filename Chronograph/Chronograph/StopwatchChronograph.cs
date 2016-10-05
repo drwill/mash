@@ -41,7 +41,7 @@ namespace Mash.Chronograph
             }
         }
 
-        public void MeasureAction(Action theAction)
+        public TimeSpan MeasureAction(Action theAction)
         {
             var stopwatch = new Stopwatch();
 
@@ -50,6 +50,8 @@ namespace Mash.Chronograph
             stopwatch.Stop();
 
             ActiveSession.AddLap(stopwatch.Elapsed);
+
+            return stopwatch.Elapsed;
         }
 
         public Session Restart()

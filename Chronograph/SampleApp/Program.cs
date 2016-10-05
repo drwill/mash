@@ -16,13 +16,15 @@ namespace Mash.Chronograph.SampleApp
             PrintChronoStatistics(chrono.ActiveSession);
 
             // Use MeasureAction method
-            chrono.MeasureAction(() => { TheOperation(); });
+         
+   chrono.MeasureAction(() => { TheOperation(); });
             PrintChronoStatistics(chrono.ActiveSession);
 
             // Measure a bunch more actions
             for (int i = 0; i < 10; ++i)
             {
-                chrono.MeasureAction(TheOperation);
+                TimeSpan elapsed = chrono.MeasureAction(TheOperation);
+                Console.WriteLine($"\tAction measured at {elapsed.TotalMilliseconds:N0} ms");
             }
 
             var snapshot = chrono.Restart();

@@ -33,7 +33,8 @@ namespace Mash.Chronograph
         /// Measures the duration of the specified action, and updates the chrono statistics in a threadsafe way
         /// </summary>
         /// <param name="theAction">The action to capture</param>
-        void MeasureAction(Action theAction);
+        /// <returns>The duration of the measured action</returns>
+        TimeSpan MeasureAction(Action theAction);
 
         /// <summary>
         /// Takes a snapshot of the chrono statistics and starts a fresh session

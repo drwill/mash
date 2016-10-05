@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Mash.Chronograph
 {
@@ -36,6 +37,13 @@ namespace Mash.Chronograph
         /// <param name="theAction">The action to capture</param>
         /// <returns>The duration of the measured action</returns>
         TimeSpan MeasureAction(Action theAction);
+
+        /// <summary>
+        /// Measures the duration of the specified action, and updates the chrono statistics in a threadsafe way
+        /// </summary>
+        /// <param name="theAction">The async action to capture</param>
+        /// <returns>The duration of the measured action</returns>
+        Task<TimeSpan> MeasureActionAsync(Func<Task> theAction);
 
         /// <summary>
         /// Takes a snapshot of the chrono statistics and starts a fresh session

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Mash.Chronograph
 {
@@ -49,6 +50,19 @@ namespace Mash.Chronograph
 
             stopwatch.Start();
             theAction();
+            stopwatch.Stop();
+
+            ActiveSession.AddLap(stopwatch.Elapsed);
+
+            return stopwatch.Elapsed;
+        }
+
+        public async Task<TimeSpan> MeasureActionAsync(Func<Task> theAction)
+        {
+            var stopwatch = new Stopwatch();
+
+            stopwatch.Start();
+            await theAction();
             stopwatch.Stop();
 
             ActiveSession.AddLap(stopwatch.Elapsed);

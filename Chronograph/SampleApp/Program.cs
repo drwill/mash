@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Mash.Chronograph.SampleApp
 {
@@ -26,6 +27,8 @@ namespace Mash.Chronograph.SampleApp
                 Console.WriteLine($"\tAction measured at {elapsed.TotalMilliseconds:N0} ms");
             }
 
+            Task.Run(async () => { await TheAsyncOperation(); }).Wait();
+
             var snapshot = chrono.Restart();
             PrintChronoStatistics(snapshot);
 
@@ -40,6 +43,15 @@ namespace Mash.Chronograph.SampleApp
             Console.WriteLine($"\tRunning an operation; sleeping for {randValue} ms");
 
             Thread.Sleep(randValue);
+        }
+
+        static async Task TheAsyncOperation()
+        {
+            int randValue = _rand.Next(10, 501);
+
+            Console.WriteLine($"\tRunning an operation; sleeping for {randValue} ms");
+
+            await Task.Delay(randValue);
         }
 
         static void PrintChronoStatistics(Session snapshot)

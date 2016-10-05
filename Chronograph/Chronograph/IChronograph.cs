@@ -26,8 +26,9 @@ namespace Mash.Chronograph
         /// <summary>
         /// Stops the time keeper
         /// </summary>
+        /// <returns>The duration of the measured interval</returns>
         /// <remarks>For threadsafe starting and stopping of the chrono, use the Capture method instead</remarks>
-        void Stop();
+        TimeSpan Stop();
 
         /// <summary>
         /// Measures the duration of the specified action, and updates the chrono statistics in a threadsafe way

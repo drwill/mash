@@ -27,7 +27,7 @@ namespace Mash.Chronograph
             }
         }
 
-        public void Stop()
+        public TimeSpan Stop()
         {
             lock(_lockObject)
             {
@@ -38,6 +38,8 @@ namespace Mash.Chronograph
 
                 _stopwatch.Stop();
                 ActiveSession.AddLap(_stopwatch.Elapsed);
+
+                return _stopwatch.Elapsed;
             }
         }
 

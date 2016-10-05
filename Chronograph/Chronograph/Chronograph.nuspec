@@ -11,7 +11,7 @@
     <iconUrl>https://raw.githubusercontent.com/drwill/mash/master/Chronograph/Chronograph/1448677366_icon-23-stop-watch.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>MeasureAction now returns the elapsed time</releaseNotes>
+    <releaseNotes>Stop now returns the elapsed time</releaseNotes>
     <copyright>Copyright 2016</copyright>
     <tags>stopwatch chrono start stop measure capture average mean max chronograph</tags>
   </metadata>

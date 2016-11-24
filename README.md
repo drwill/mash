@@ -3,4 +3,4 @@
 
 [AppSettings loader](/AppSettings/)
 
-In beta: [Chronograph](/Chronograph/)
+[Chronograph](/Chronograph/)

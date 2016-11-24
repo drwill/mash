@@ -55,6 +55,7 @@
     <Compile Include="AppConfigSettingLoaderTests.cs" />
     <Compile Include="AppSettingsAttributeTests.cs" />
     <Compile Include="AppSettingsLoaderTests.cs" />
+    <Compile Include="DevSettingLoaderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingLoaderMock.cs" />
     <Compile Include="TypeParserTests.cs" />
@@ -63,6 +64,10 @@
     <ProjectReference Include="..\AppSettings\AppSettings.csproj">
       <Project>{4dabd61b-7bcc-426a-9b6d-0af59e1dbc35}</Project>
       <Name>AppSettings</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DevSettings\DevSettings.csproj">
+      <Project>{925f7982-0329-40bc-be40-e76af1ae93a3}</Project>
+      <Name>DevSettings</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

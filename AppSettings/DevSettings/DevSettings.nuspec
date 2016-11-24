@@ -1,0 +1,22 @@
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>MASH: David R. Williamson</authors>
+    <owners>MASH: David R. Williamson</owners>
+    <licenseUrl>https://github.com/drwill/mash/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/drwill/mash/tree/master/AppSettings/DevSettings</projectUrl>
+    <iconUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Simple_cog.svg/120px-Simple_cog.svg.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>Initial release.</releaseNotes>
+    <copyright>Copyright 2015</copyright>
+    <tags>application dev settings loader</tags>
+  </metadata>
+  <files>
+    <file src="bin\$configuration$\$id$.pdb" target="lib\net461\" />
+    <file src="bin\$configuration$\readme.md" />
+  </files>
+</package>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppSettings", "AppSettings\AppSettings.csproj", "{4DABD61B-7BCC-426A-9B6D-0AF59E1DBC35}"
 EndProject
@@ -9,12 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppSettingsTests", "AppSett
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApp", "SampleApp\SampleApp.csproj", "{4ECC161F-4B53-4868-9C45-B74DE0F857A6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7B64B66E-8806-49E1-BD29-F60BAE232B21}"
-	ProjectSection(SolutionItems) = preProject
-		README.md = README.md
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWebApp", "SampleWebApp\SampleWebApp.csproj", "{6867B0AE-BBB9-464C-9619-135C52309AAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevSettings", "DevSettings\DevSettings.csproj", "{925F7982-0329-40BC-BE40-E76AF1AE93A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +35,10 @@ Global
 		{6867B0AE-BBB9-464C-9619-135C52309AAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6867B0AE-BBB9-464C-9619-135C52309AAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6867B0AE-BBB9-464C-9619-135C52309AAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{925F7982-0329-40BC-BE40-E76AF1AE93A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{925F7982-0329-40BC-BE40-E76AF1AE93A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{925F7982-0329-40BC-BE40-E76AF1AE93A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{925F7982-0329-40BC-BE40-E76AF1AE93A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

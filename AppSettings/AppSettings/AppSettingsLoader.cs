@@ -12,6 +12,11 @@ namespace Mash.AppSettings
     public sealed class AppSettingsLoader
     {
         /// <summary>
+        /// Set this property to override in the Load any settings it can get instead
+        /// </summary>
+        public static ISettingLoader DevSettings { get; set; }
+
+        /// <summary>
         /// Loads settings for the public properties in the specified class using the specified settings loader
         /// </summary>
         /// <typeparam name="T">The type of settings class being loaded</typeparam>
@@ -59,6 +64,7 @@ namespace Mash.AppSettings
                     var model = new SettingTypeModel
                     {
                         SettingLoader = settingLoader,
+                        DevLoader = DevSettings,
                         SettingsClass = settingsClass,
                         Member = member,
                         SettingName = settingName,

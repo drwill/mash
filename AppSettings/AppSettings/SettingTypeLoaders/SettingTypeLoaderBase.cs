@@ -31,8 +31,15 @@ namespace Mash.AppSettings
         }
 
         protected string LoadValue(SettingTypeModel model)
+
         {
-            var loadedValue = model.SettingLoader.GetSetting(model.SettingName);
+            string loadedValue = model.DevLoader?.GetSetting(model.SettingName);
+
+            if (loadedValue == null)
+            {
+                loadedValue = model.SettingLoader.GetSetting(model.SettingName);
+            }
+
             if (!CheckIfSettingIsValid(loadedValue, model.SettingName))
             {
                 if (IsSettingRequired(model.Member))

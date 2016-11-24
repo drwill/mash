@@ -18,7 +18,7 @@ Your code will look like this:
 
 <pre><code>var settings = Settings.Instance;</code></pre>
 
-Your settings class will look something like this:
+Your settings class can look as simple as this:
 <pre><code>[AppSetting]
 class MySettings : SingletonSettings&lt;MySettings&gt;
 {
@@ -58,7 +58,14 @@ Included is support for loading settings from your app.config or web.config file
 Useful information will be traced during loading. Watch your output window for any issues encountered.
 Any problems loading values will be returned in an aggregate exception, unless your property is decorated as Optional.
 
+Use the DevSettings property on the AppSettingsLoader class to override whatever settings would normally be loaded with
+development settings. If the DevSettings loader does not have the setting, the usual one will be loaded instead.
+
 ## What's New?
+
+###November 11, 2016
+Added support for loading development-specific settings by setting the AppSettingsLoader.DevSettings property with a loader
+of your choice which will optionally supply developer-specific values.
 
 ###September 29, 2016
 Loading a list now handles semi-colons as well as commas. It also trims whitespace around entries.

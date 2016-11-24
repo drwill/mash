@@ -11,7 +11,7 @@
     <iconUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Simple_cog.svg/120px-Simple_cog.svg.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>List values can now be separated by semi-colons as well as commas, and the entries are trimmed for whitespace.</releaseNotes>
+    <releaseNotes>Add support for Development Mode where an additional SettingLoader can be specified to load development settings (if available) first.</releaseNotes>
     <copyright>Copyright 2015</copyright>
     <tags>application settings loader app.config web.config</tags>
   </metadata>

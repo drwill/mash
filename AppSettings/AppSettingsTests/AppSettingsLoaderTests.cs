@@ -289,6 +289,43 @@ namespace Mash.AppSettings.Tests
             CollectionAssert.AreEqual(values, settings.Values);
         }
 
+        [TestMethod]
+        public void AppSettings_Load_DevSettingOverrides()
+        {
+            string settingName = "OptionalSetting";
+            string devSetting = "dev";
+
+            var devLoader = new SettingLoaderMock();
+            devLoader.Settings.Add(settingName, devSetting);
+
+            var prodLoader = new SettingLoaderMock();
+            prodLoader.Settings.Add(settingName, "prod");
+
+            var settings = new SettingsOptionalClass();
+            AppSettingsLoader.DevSettings = devLoader;
+            Assert.IsTrue(AppSettingsLoader.Load(prodLoader, ref settings), "Load returned false");
+
+            Assert.AreEqual(devSetting, settings.OptionalSetting);
+        }
+
+        [TestMethod]
+        public void AppSettings_Load_NoDevSettingLoadsAsNormal()
+        {
+            string settingName = "OptionalSetting";
+            string prodSetting = "prod";
+
+            var devLoader = new SettingLoaderMock();
+
+            var prodLoader = new SettingLoaderMock();
+            prodLoader.Settings.Add(settingName, prodSetting);
+
+            var settings = new SettingsOptionalClass();
+            AppSettingsLoader.DevSettings = devLoader;
+            Assert.IsTrue(AppSettingsLoader.Load(prodLoader, ref settings), "Load returned false");
+
+            Assert.AreEqual(prodSetting, settings.OptionalSetting);
+        }
+
         [AppSetting(Optional = true)]
         public class SettingsPrimitives
         {

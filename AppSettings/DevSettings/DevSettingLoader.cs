@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 
 namespace Mash.AppSettings.DevSettings
@@ -7,40 +9,99 @@ namespace Mash.AppSettings.DevSettings
     public class DevSettingLoader : ISettingLoader
     {
         public string DevSettingFile { get; private set; }
+        private Dictionary<string, dynamic> _devSettings = new Dictionary<string, dynamic>();
+        private Dictionary<string, string> _connectionStrings = new Dictionary<string, string>();
 
         /// <summary>
         /// Creates an instance of DevSettingLoader
         /// </summary>
-        /// <param name="pathToDevSettingsFiles">The path to files holding developer-specific settings, defaults to current directory</param>
-        /// <param name="devSettingsFile">The developer's file to load, defaults to %username%.json</param>
-        public DevSettingLoader(string pathToDevSettingsFiles = null, string devSettingsFile = null)
+        /// <param name="dir">The path to files holding developer-specific settings, defaults to current directory</param>
+        /// <param name="fileName">The developer's file to load, defaults to %username%.json</param>
+        public DevSettingLoader(string dir = null, string fileName = null)
         {
-            if (String.IsNullOrEmpty(pathToDevSettingsFiles))
+            if (String.IsNullOrEmpty(dir))
             {
-                pathToDevSettingsFiles = Environment.CurrentDirectory;
+                dir = Environment.CurrentDirectory;
             }
 
-            if (String.IsNullOrWhiteSpace(devSettingsFile))
+            string fileType = ".json";
+            if (String.IsNullOrWhiteSpace(fileName))
             {
-                devSettingsFile = $"{Environment.UserName}.json";
+                fileName = $"{Environment.UserName}{fileType}";
             }
 
-            DevSettingFile = Path.Combine(pathToDevSettingsFiles, devSettingsFile);
+            if (!fileName.EndsWith(fileType))
+            {
+                throw new ArgumentException("Mash.AppSettings.DevSettingLoader: Only JSON files are valid.", nameof(fileName));
+            }
+
+            DevSettingFile = Path.Combine(dir, fileName);
+            Trace.TraceInformation($"Mash.AppSettings.DevSettingLoader: using dev setting file [{DevSettingFile}]");
+
+            string fileContents = "";
+            try
+            {
+                fileContents = File.ReadAllText(DevSettingFile);
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceWarning($"Mash.AppSettings.DevSettingLoader: Failed to load file {DevSettingFile} due to {ex}");
+            }
+
+            LoadSettings(fileContents);
+        }
+
+        /// <summary>
+        /// Creates an instance of DevSetingLoader
+        /// </summary>
+        /// <param name="json">The json holding developer-specific settings</param>
+        public DevSettingLoader(string json)
+        {
+            LoadSettings(json);
+        }
+
+        private void LoadSettings(string json)
+        {
+            if (String.IsNullOrWhiteSpace(json))
+            {
+                return;
+            }
+            
+            _devSettings = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(json);
+
+            dynamic connectionStrings;
+            if (_devSettings.TryGetValue("ConnectionStrings", out connectionStrings))
+            {
+                _connectionStrings = JsonConvert.DeserializeObject<Dictionary<string, string>>(connectionStrings.ToString());
+            }
+            else
+            {
+                _connectionStrings = new Dictionary<string, string>();
+            }
         }
 
         public string GetConnectionString(string connectionStringKey)
         {
-            throw new NotImplementedException();
+            string result;
+            _connectionStrings.TryGetValue(connectionStringKey, out result);
+
+            return result;
         }
 
         public IDictionary<string, string> GetConnectionStrings()
         {
-            throw new NotImplementedException();
+            return _connectionStrings;
         }
 
         public string GetSetting(string settingKey)
         {
-            throw new NotImplementedException();
+            dynamic value;
+            if (!_devSettings.TryGetValue(settingKey, out value))
+            {
+                return null;
+            }
+
+            return value.ToString();
         }
     }
 }

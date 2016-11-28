@@ -67,7 +67,7 @@ development settings. If the DevSettings loader does not have the setting, the u
 
 ## What's New
 
-### November 11, 2016
+### November 23, 2016
 
 Added support for loading development-specific settings by setting the AppSettingsLoader.DevSettings property with a loader
 of your choice which will optionally supply developer-specific values.

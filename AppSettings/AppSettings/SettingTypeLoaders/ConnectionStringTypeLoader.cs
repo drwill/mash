@@ -13,13 +13,25 @@ namespace Mash.AppSettings
                 return base.DoWork(model);
             }
 
-            Trace.TraceInformation($"Loading connection string into [{model.Member.Name}].");
-            var loadedConnectionString = model.SettingLoader.GetConnectionString(model.SettingName);
+            Trace.TraceInformation($"Mash.AppSettings: Loading connection string into [{model.Member.Name}].");
+
+            string loadedConnectionString = null;
+            if (model.DevLoader != null)
+            {
+                loadedConnectionString = model.DevLoader.GetConnectionString(model.SettingName);
+                Trace.TraceInformation($"Mash.AppSettings: attempting override connection string {model.SettingName} from dev settings with [{loadedConnectionString}]");
+            }
+
+            if (String.IsNullOrWhiteSpace(loadedConnectionString))
+            {
+                loadedConnectionString = model.SettingLoader.GetConnectionString(model.SettingName);
+            }
+
             if (!CheckIfSettingIsValid(loadedConnectionString, model.SettingName))
             {
                 if (IsSettingRequired(model.Member))
                 {
-                    throw new ArgumentException("The connection string could not be found.", model.SettingName);
+                    throw new ArgumentException("Mash.AppSettings: The connection string could not be found.", model.SettingName);
                 }
 
                 return true;

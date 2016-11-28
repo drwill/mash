@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Mash.AppSettings
 {
@@ -12,7 +13,18 @@ namespace Mash.AppSettings
             }
 
             Trace.TraceInformation($"Mash.AppSettings: Loading all connection strings into [{model.Member.Name}].");
-            model.Member.SetValue(model.SettingsClass, model.SettingLoader.GetConnectionStrings());
+
+            var connectionStrings = new Dictionary<string, string>(model.SettingLoader.GetConnectionStrings());
+            if (model.DevLoader != null)
+            {
+                foreach (var kvp in model.DevLoader.GetConnectionStrings())
+                {
+                    Trace.TraceInformation($"Mash.AppSettings: overriding {kvp.Key} connection string from dev settings");
+                    connectionStrings[kvp.Key] = kvp.Value;
+                }
+            }
+
+            model.Member.SetValue(model.SettingsClass, connectionStrings);
 
             return true;
         }

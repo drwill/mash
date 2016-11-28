@@ -309,7 +309,7 @@ namespace Mash.AppSettings.Tests
         }
 
         [TestMethod]
-        public void AppSettings_Load_NoDevSettingLoadsAsNormal()
+        public void AppSettings_Load_NoDevSettingPresentLoadsAsNormal()
         {
             string settingName = "OptionalSetting";
             string prodSetting = "prod";
@@ -324,6 +324,51 @@ namespace Mash.AppSettings.Tests
             Assert.IsTrue(AppSettingsLoader.Load(prodLoader, ref settings), "Load returned false");
 
             Assert.AreEqual(prodSetting, settings.OptionalSetting);
+        }
+
+        [TestMethod]
+        public void AppSettings_Load_DevConnectionStringOverrides()
+        {
+            string csName = "OptionalSetting";
+            string expected = "dev";
+
+            var devLoader = new SettingLoaderMock();
+            devLoader.ConnectionStrings.Add(csName, expected);
+
+            var prodLoader = new SettingLoaderMock();
+            prodLoader.ConnectionStrings.Add(csName, "prod");
+
+            var settings = new SettingsConnectionStrings();
+            AppSettingsLoader.DevSettings = devLoader;
+            Assert.IsTrue(AppSettingsLoader.Load(prodLoader, ref settings), "Load returned false");
+
+            Assert.AreEqual(1, settings.ConnectionStrings.Count);
+            Assert.AreEqual(settings.ConnectionStrings[csName], expected);
+        }
+
+        [TestMethod]
+        public void AppSettings_Load_DevConnectionStringsOverrides()
+        {
+            string csName = "OptionalSetting";
+            string expected = "dev";
+
+            string csName2 = "cs2";
+            string expected2 = "value2";
+
+            var devLoader = new SettingLoaderMock();
+            devLoader.ConnectionStrings.Add(csName, expected);
+
+            var prodLoader = new SettingLoaderMock();
+            prodLoader.ConnectionStrings.Add(csName, "prod");
+            prodLoader.ConnectionStrings.Add(csName2, expected2);
+
+            var settings = new SettingsConnectionStrings();
+            AppSettingsLoader.DevSettings = devLoader;
+            Assert.IsTrue(AppSettingsLoader.Load(prodLoader, ref settings), "Load returned false");
+
+            Assert.AreEqual(2, settings.ConnectionStrings.Count);
+            Assert.AreEqual(settings.ConnectionStrings[csName], expected);
+            Assert.AreEqual(settings.ConnectionStrings[csName2], expected2);
         }
 
         [AppSetting(Optional = true)]

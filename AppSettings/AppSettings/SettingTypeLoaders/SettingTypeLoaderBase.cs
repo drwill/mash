@@ -44,10 +44,10 @@ namespace Mash.AppSettings
             {
                 if (IsSettingRequired(model.Member))
                 {
-                    throw new ArgumentException("The setting could not be found.", model.SettingName);
+                    throw new ArgumentException("Mash.AppSettings: The setting could not be found.", model.SettingName);
                 }
 
-                Trace.TraceInformation($"Skipping optional setting [{model.SettingName}] which had no value.");
+                Trace.TraceInformation($"Mash.AppSettings: Skipping optional setting [{model.SettingName}] which had no value.");
             }
 
             return loadedValue;

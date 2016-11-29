@@ -9,8 +9,13 @@ When each developer can specify their own options, you can quickly debug locally
 The developer-specific files must be in JSON format, and need only specify app settings you wish to override.
 
 Your code can do a check to see if it is in dev mode (perhaps based on an environment variable).
-Ideally, each developer in the team can commit their own file to the project using their unique user name to make the files unique that
-way the call to construct DevSettingLoader will not need to be different per user.
+Ideally, each developer in the team can commit their own file to the project using their unique user name to make the files unique that way the call to construct DevSettingLoader will not need to be different per user.
+<pre><code>{
+  "Setting1": "DevOverride",
+  "ConnectionStrings": {
+    "Cxn1": "DevOverrideCxn"
+  }
+}</code></pre>
 
 ## Developer support
 
@@ -18,6 +23,6 @@ Useful information will be traced during loading. Watch your output window for a
 
 ## What's New
 
-### November 24, 2016
+### November 28, 2016
 
 Initial implementation.

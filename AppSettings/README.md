@@ -44,49 +44,60 @@ class MySettings : SingletonSettings&lt;MySettings&gt;
 Or if you want to opt-in all public properties, you can just decorate the class with the AppSetting attribute.
 
 There are two options to load connection strings:
-1. A single connection string can be loaded into a named property.
-2. All connection strings can be loaded into a dictionary.
+
+1 A single connection string can be loaded into a named property.
+
+2 All connection strings can be loaded into a dictionary.
 
 Use the AppSetting "SettingType" attribute property and set it to "SettingType.ConnectionString".
 When loading all connection strings, the property type must be IReadOnlyDictionary&lt;string, string&gt;.
 In the dictionary, the key will hold the connection string's name, and the value will be connection string.
 
 ## App.Config
+
 Included is support for loading settings from your app.config or web.config file.
 
 ## Developer support
+
 Useful information will be traced during loading. Watch your output window for any issues encountered.
 Any problems loading values will be returned in an aggregate exception, unless your property is decorated as Optional.
 
 Use the DevSettings property on the AppSettingsLoader class to override whatever settings would normally be loaded with
 development settings. If the DevSettings loader does not have the setting, the usual one will be loaded instead.
 
-## What's New?
+## What's New
 
-###November 11, 2016
+### November 23, 2016
+
 Added support for loading development-specific settings by setting the AppSettingsLoader.DevSettings property with a loader
 of your choice which will optionally supply developer-specific values.
 
-###September 29, 2016
+### September 29, 2016
+
 Loading a list now handles semi-colons as well as commas. It also trims whitespace around entries.
 
-###March 8, 2016
+### March 8, 2016
+
 The Optional setting can be applied to the class level and will be inherited by all members, unless otherwise specified on the property.
 
-###March 2, 2016
+### March 2, 2016
+
 Fixed a null reference exception in the app config setting loader when attempting to load a connection string which does not exist.
 
-###Feb 28, 2016
+### Feb 28, 2016
+
 You can now load comma-delimited settings into a property type that supports IList&lt;T&gt; where T is a public type.
 If you do not initialize the property with an instance, AppSettingsLoader will create a List&lt;T&gt; for you.
 
 Also fixed a bug with the Optional feature released a week ago. The logic was reversed. Sorry about that!
 
-###Feb 21, 2016
+### Feb 21, 2016
+
 In order to prevent bugs due to settings that don't exist at the source, an exception will now be thrown.
 If you do not wish to be notified with an exception, mark the setting as Optional (see example above).
 
-###Feb 20, 2016
+### Feb 20, 2016
+
 Added a singleton base class to derive your settings class from.
 Because the base class creates an instance of your class you must specify the type, and it must have a parameterless constructor.
 

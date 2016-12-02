@@ -63,9 +63,14 @@ Useful information will be traced during loading. Watch your output window for a
 Any problems loading values will be returned in an aggregate exception, unless your property is decorated as Optional.
 
 Use the DevSettings property on the AppSettingsLoader class to override whatever settings would normally be loaded with
-development settings. If the DevSettings loader does not have the setting, the usual one will be loaded instead.
+development settings.
+If the DevSettings loader does not have the setting, the usual one will be loaded instead. See Mash.AppSettings.DevSettings for an implementation that reads developer-specific settings from a json file.
 
 ## What's New
+
+### December 1, 2016
+
+Reduced .NET version requirement to 4.5 to enable legacy clients, as the library does not require 4.61.
 
 ### November 23, 2016
 

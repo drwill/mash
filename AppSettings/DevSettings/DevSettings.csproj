@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Mash.AppSettings.DevSettings</RootNamespace>
     <AssemblyName>Mash.AppSettings.DevSettings</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -31,8 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Mash.AppSettings, Version=1.0.6116.31246, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mash.AppSettings.1.0.6116.31246\lib\net451\Mash.AppSettings.dll</HintPath>
+    <Reference Include="Mash.AppSettings, Version=1.0.6179.29949, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mash.AppSettings.1.0.6179.29949\lib\net45\Mash.AppSettings.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -54,7 +54,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DevSettings.nuspec" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="README.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

@@ -11,12 +11,12 @@
     <iconUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Simple_cog.svg/120px-Simple_cog.svg.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Add support for Development Mode where an additional SettingLoader can be specified to load development settings (if available) first.</releaseNotes>
+    <releaseNotes>Revert to .NET 4.5 to enable use by legacy projects.</releaseNotes>
     <copyright>Copyright 2015</copyright>
     <tags>application settings loader app.config web.config</tags>
   </metadata>
   <files>
-    <file src="bin\$configuration$\$id$.pdb" target="lib\net461\" />
+    <file src="bin\$configuration$\$id$.pdb" target="lib\net45\" />
     <file src="bin\$configuration$\readme.md" />
   </files>
 </package>

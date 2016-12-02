@@ -144,6 +144,9 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="common.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -192,6 +195,10 @@
     <ProjectReference Include="..\AppSettings\AppSettings.csproj">
       <Project>{4dabd61b-7bcc-426a-9b6d-0af59e1dbc35}</Project>
       <Name>AppSettings</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DevSettings\DevSettings.csproj">
+      <Project>{925f7982-0329-40bc-be40-e76af1ae93a3}</Project>
+      <Name>DevSettings</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

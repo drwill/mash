@@ -30,7 +30,7 @@ namespace SampleWebApp.Models
             }
 
             var settings = new Settings();
-            AppSettingsLoader.Load(Factory.GetAppConfigSettingLoader(), ref settings);
+            AppSettingsLoader.Load(AppSettingsFactory.GetAppConfigSettingLoader(), ref settings);
 
             return settings;
         }

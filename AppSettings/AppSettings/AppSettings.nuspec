@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<package >
+<package>
   <metadata>
     <id>$id$</id>
     <version>$version$</version>
@@ -11,9 +11,9 @@
     <iconUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Simple_cog.svg/120px-Simple_cog.svg.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Revert to .NET 4.5 to enable use by legacy projects.</releaseNotes>
-    <copyright>Copyright 2015</copyright>
-    <tags>application settings loader app.config web.config</tags>
+    <releaseNotes>Add setting load for Json files, renamed Factory to AppSettingsFactory.</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags>application settings loader app.config web.config json</tags>
   </metadata>
   <files>
     <file src="bin\$configuration$\$id$.pdb" target="lib\net45\" />

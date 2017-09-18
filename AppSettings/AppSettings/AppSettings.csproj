@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -42,11 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppConfigSettingLoader.cs" />
+    <Compile Include="SettingLoaders\AppConfigSettingLoader.cs" />
     <Compile Include="AppSettingAttribute.cs" />
     <Compile Include="AppSettingsLoader.cs" />
-    <Compile Include="Factory.cs" />
-    <Compile Include="ISettingLoader.cs" />
+    <Compile Include="AppSettingsFactory.cs" />
+    <Compile Include="SettingLoaders\ISettingLoader.cs" />
+    <Compile Include="SettingLoaders\JsonSettingLoader.cs" />
     <Compile Include="SettingTypeLoaders\CollectionTypeLoader.cs" />
     <Compile Include="SettingTypeLoaders\ConnectionStringsTypeLoader.cs" />
     <Compile Include="SettingTypeLoaders\ConnectionStringTypeLoader.cs" />
@@ -63,6 +67,7 @@
     <None Include="..\README.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

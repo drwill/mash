@@ -18,7 +18,7 @@ namespace Mash.AppSettings
         /// <summary>
         /// The setting loader to use, by default the AppConfigSettingLoader.
         /// </summary>
-        public static ISettingLoader SettingLoader { get; set; } = Factory.GetAppConfigSettingLoader();
+        public static ISettingLoader SettingLoader { get; set; } = AppSettingsFactory.GetAppConfigSettingLoader();
 
         private static T LoadInstance()
         {

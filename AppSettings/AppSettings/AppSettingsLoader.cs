@@ -7,10 +7,12 @@ using System.Reflection;
 namespace Mash.AppSettings
 {
     /// <summary>
-    /// Loads application settings into your own custom data class
+    /// Loads application settings into your own data class
     /// </summary>
     public sealed class AppSettingsLoader
     {
+        private static SettingTypeLoaderBase _settingTypeLoaders = BuildSettingTypeLoaders();
+
         /// <summary>
         /// Set this property to override in the Load any settings it can get instead
         /// </summary>
@@ -48,7 +50,7 @@ namespace Mash.AppSettings
 
             foreach (PropertyInfo member in members)
             {
-                var attr = member.GetCustomAttribute<AppSettingAttribute>();
+                AppSettingAttribute attr = member.GetCustomAttribute<AppSettingAttribute>();
                 string settingName = attr?.Key ?? member.Name;
 
                 Trace.TraceInformation($"Mash.AppSettings: Loading class member [{member.Name}] as [{settingName}].");
@@ -89,16 +91,6 @@ namespace Mash.AppSettings
             return true;
         }
 
-        private static bool HasAttribute(MemberInfo mi, object o)
-        {
-            if (mi.DeclaringType.GetCustomAttribute<AppSettingAttribute>() != null)
-            {
-                return true;
-            }
-
-            return mi.GetCustomAttribute<AppSettingAttribute>() != null;
-        }
-
         private static SettingTypeLoaderBase BuildSettingTypeLoaders()
         {
             var poco = new PocoSettingTypeLoader();
@@ -117,6 +109,14 @@ namespace Mash.AppSettings
             return loaders.First();
         }
 
-        private static SettingTypeLoaderBase _settingTypeLoaders = BuildSettingTypeLoaders();
+        private static bool HasAttribute(MemberInfo mi, object o)
+        {
+            if (mi.DeclaringType.GetCustomAttribute<AppSettingAttribute>() != null)
+            {
+                return true;
+            }
+
+            return mi.GetCustomAttribute<AppSettingAttribute>() != null;
+        }
     }
 }

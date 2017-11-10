@@ -11,7 +11,7 @@
     <iconUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Simple_cog.svg/120px-Simple_cog.svg.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Add setting load for Json files, renamed Factory to AppSettingsFactory.</releaseNotes>
+    <releaseNotes>Rolling back update to Newtonsoft.Json v10 update due to breaking changes.</releaseNotes>
     <copyright>Copyright 2017</copyright>
     <tags>application settings loader app.config web.config json</tags>
   </metadata>

@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Mash.ArmTools</AssemblyName>
+    <RootNamespace>Mash.ArmTools</RootNamespace>
+    <PackageReleaseNotes>Initial release</PackageReleaseNotes>
+    <Description>Tools for working with Azure Resource Management (ARM)
+
+Icon By Google Inc., CC BY 4.0, https://commons.wikimedia.org/w/index.php?curid=36333975</Description>
+    <Authors>MASH: David R. Williamson, Azad Abbasi</Authors>
+    <Company />
+    <Copyright>Copyright 2018</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/drwill/mash/tree/master/ArmTools</PackageProjectUrl>
+    <PackageIconUrl>https://upload.wikimedia.org/wikipedia/commons/2/20/Ic_cloud_circle_48px.svg</PackageIconUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.1.0-preview</Version>
+    <RepositoryUrl>https://github.com/drwill/mash/tree/master/ArmTools</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>ARM;Resource ID</PackageTags>
+  </PropertyGroup>
+
+</Project>

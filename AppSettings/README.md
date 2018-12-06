@@ -76,18 +76,21 @@ In the dictionary, the key will hold the connection string's name, and the value
 
 ## App.Config
 
-Included is support for loading settings from your app.config or web.config file.
+Included is support for loading settings from your app.config or web.config file. See the SampleApp for a working example.
 
 ## Developer support
 
 Useful information will be traced during loading. Watch your output window for any issues encountered.
 Any problems loading values will be returned in an aggregate exception, unless your property is decorated as Optional.
 
-Use the DevSettings property on the AppSettingsLoader class to override whatever settings would normally be loaded with
-development settings.
+Use the DevSettings property on the AppSettingsLoader class to override whatever settings would normally be loaded with development settings.
 If the DevSettings loader does not have the setting, the usual one will be loaded instead. See Mash.AppSettings.DevSettings for an implementation that reads developer-specific settings from a json file.
 
 ## What's New
+
+### December 6, 2018
+
+Converted project to target .NET Core 2.1.
 
 ### September 17, 2017
 
@@ -101,8 +104,7 @@ Reduced .NET version requirement to 4.5 to enable legacy clients, as the library
 
 ### November 23, 2016
 
-Added support for loading development-specific settings by setting the AppSettingsLoader.DevSettings property with a loader
-of your choice which will optionally supply developer-specific values.
+Added support for loading development-specific settings by setting the AppSettingsLoader.DevSettings property with a loader of your choice which will optionally supply developer-specific values.
 
 ### September 29, 2016
 

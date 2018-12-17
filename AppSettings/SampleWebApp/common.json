@@ -1,6 +1,0 @@
-﻿{
-  "StringSetting": "DevString",
-  "ConnectionStrings": {
-    "MyConnectionString2": "Data Source=DevServer2;Initial Catalog=defaultDatabase2;MultiSubnetFailover=True;Integrated Security=SSPI"
-  }
-}

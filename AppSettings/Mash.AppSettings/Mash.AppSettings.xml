@@ -1,0 +1,219 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Mash.AppSettings</name>
+    </assembly>
+    <members>
+        <member name="T:Mash.AppSettings.AppSettingAttribute">
+            <summary>
+            A code attribute for decorating a settings class' properties
+            </summary>
+            <remarks>
+            As a convenience to avoid decorating each property, you may choose to attribute the class which will opt in all class public properties.
+            </remarks>
+        </member>
+        <member name="P:Mash.AppSettings.AppSettingAttribute.Key">
+            <summary>
+            The key of the feature control key to load
+            </summary>
+            <remarks>
+            Use this if you wish to use a name other than the attributed property for loading the target feature control key
+            </remarks>
+        </member>
+        <member name="P:Mash.AppSettings.AppSettingAttribute.SettingType">
+            <summary>
+            The type of setting to load
+            </summary>
+        </member>
+        <member name="P:Mash.AppSettings.AppSettingAttribute.Optional">
+            <summary>
+            If the setting is optional, an exception will not be thrown if it does not exist
+            </summary>
+        </member>
+        <member name="T:Mash.AppSettings.AppSettingsFactory">
+            <summary>
+            Public factory for AppSettings objects
+            </summary>
+        </member>
+        <member name="M:Mash.AppSettings.AppSettingsFactory.GetAppConfigSettingLoader">
+            <summary>
+            Gets a setting loader for .NET application's configuration file
+            </summary>
+        </member>
+        <member name="M:Mash.AppSettings.AppSettingsFactory.GetJsonSettingLoader(System.String)">
+            <summary>
+            Gets a setting loader for Json files
+            </summary>
+            <param name="pathToJsonSettingsFile">The full path to the json settings file</param>
+        </member>
+        <member name="T:Mash.AppSettings.AppSettingsLoader">
+            <summary>
+            Loads application settings into your own data class
+            </summary>
+        </member>
+        <member name="P:Mash.AppSettings.AppSettingsLoader.DevSettings">
+            <summary>
+            Set this property to override in the Load any settings it can get instead
+            </summary>
+        </member>
+        <member name="M:Mash.AppSettings.AppSettingsLoader.Load``1(Mash.AppSettings.ISettingLoader,``0@)">
+            <summary>
+            Loads settings for the public properties in the specified class using the specified settings loader
+            </summary>
+            <typeparam name="T">The type of settings class being loaded</typeparam>
+            <param name="settingLoader">The specified setting loader to use</param>
+            <param name="settingsClass">The settings class to save settings into</param>
+            <returns>True if successful</returns>
+            <exception cref="T:System.ArgumentNullException">The parameters must be valid</exception>
+            <exception cref="T:System.AggregateException">Any mismatch in setting name or type loading will be reported</exception>
+            <remarks>Check trace statements for any additional issues encountered during loading</remarks>
+        </member>
+        <member name="T:Mash.AppSettings.AppConfigSettingLoader">
+            <summary>
+            Loads the requested setting from the app configiguration file
+            </summary>
+        </member>
+        <member name="M:Mash.AppSettings.AppConfigSettingLoader.GetSetting(System.String)">
+            <summary>
+            Loads the specified setting
+            </summary>
+            <param name="settingKey">The key of the setting to load</param>
+            <returns>The value</returns>
+        </member>
+        <member name="M:Mash.AppSettings.AppConfigSettingLoader.GetConnectionString(System.String)">
+            <summary>
+            Loads the specified connection string
+            </summary>
+            <param name="connectionStringKey">The key of the connection string to load</param>
+            <returns>The connection string value</returns>
+        </member>
+        <member name="M:Mash.AppSettings.AppConfigSettingLoader.GetConnectionStrings">
+            <summary>
+            Loads all connection strings from the config file
+            </summary>
+            <returns>
+            A dictionary of connection strings where key is the name and the value is the connection string
+            </returns>
+        </member>
+        <member name="T:Mash.AppSettings.ISettingLoader">
+            <summary>
+            A provider to load a setting
+            </summary>
+        </member>
+        <member name="M:Mash.AppSettings.ISettingLoader.GetSetting(System.String)">
+            <summary>
+            Loads a setting from the source
+            </summary>
+            <param name="settingKey">The key of the setting to load</param>
+            <returns>The value</returns>
+        </member>
+        <member name="M:Mash.AppSettings.ISettingLoader.GetConnectionString(System.String)">
+            <summary>
+            Loads a connection string from the source
+            </summary>
+            <param name="connectionStringKey">The key of the connection string to load</param>
+            <returns>The connection string</returns>
+        </member>
+        <member name="M:Mash.AppSettings.ISettingLoader.GetConnectionStrings">
+            <summary>
+            Loads all connection strings from the source
+            </summary>
+            <returns>
+            A dictionary of connection strings where key is the name and the value is the connection string
+            </returns>
+        </member>
+        <member name="M:Mash.AppSettings.JsonSettingLoader.#ctor(System.String)">
+            <summary>
+            Creates an instance of DevSettingLoader
+            </summary>
+            <param name="pathToJsonSettingsFile">The path to developer's file to load holding developer-specific settings, defaults to CurrentDirectory\%username%.json</param>
+        </member>
+        <member name="M:Mash.AppSettings.JsonSettingLoader.GetConnectionString(System.String)">
+            <summary>
+            Gets the specified connection string
+            </summary>
+            <param name="connectionStringKey">The name of the connection string</param>
+            <returns>The connection string</returns>
+        </member>
+        <member name="M:Mash.AppSettings.JsonSettingLoader.GetConnectionStrings">
+            <summary>
+            Gets all connection strings
+            </summary>
+            <returns>A dictionary of all connection strings</returns>
+        </member>
+        <member name="M:Mash.AppSettings.JsonSettingLoader.GetSetting(System.String)">
+            <summary>
+            Gets the specified setting by name
+            </summary>
+            <param name="settingKey">The name of the setting</param>
+            <returns>The setting value</returns>
+        </member>
+        <member name="T:Mash.AppSettings.SettingType">
+            <summary>
+            The type of setting to load
+            </summary>
+        </member>
+        <member name="F:Mash.AppSettings.SettingType.Setting">
+            <summary>
+            An app setting
+            </summary>
+        </member>
+        <member name="F:Mash.AppSettings.SettingType.ConnectionString">
+            <summary>
+            A connection string
+            </summary>
+        </member>
+        <member name="M:Mash.AppSettings.PocoSettingTypeLoader.DoWork(Mash.AppSettings.SettingTypeModel)">
+            <summary>
+            Handles plain, old CLR objects
+            </summary>
+        </member>
+        <member name="T:Mash.AppSettings.SettingTypeLoaderBase">
+            <summary>
+            A base class for setting type loaders
+            </summary>
+        </member>
+        <member name="P:Mash.AppSettings.SettingTypeLoaderBase.Next">
+            <summary>
+            The next setting type loader in the chain of responsibility
+            </summary>
+        </member>
+        <member name="M:Mash.AppSettings.SettingTypeLoaderBase.DoWork(Mash.AppSettings.SettingTypeModel)">
+            <summary>
+            Indicates whether or not this setting type matches the specified member
+            </summary>
+            <returns>True if a match, otherwise false</returns>
+        </member>
+        <member name="T:Mash.AppSettings.SingletonSettings`1">
+            <summary>
+            A base class for your settings data class to reduce initialization code required
+            </summary>
+            <remarks>
+            Specify your dervied class for T, so the base class knows what type to instantiate
+            </remarks>
+        </member>
+        <member name="P:Mash.AppSettings.SingletonSettings`1.Instance">
+            <summary>
+            The singleton instance, constructed and loaded on first evaluation.
+            </summary>
+        </member>
+        <member name="P:Mash.AppSettings.SingletonSettings`1.SettingLoader">
+            <summary>
+            The setting loader to use, by default the AppConfigSettingLoader.
+            </summary>
+        </member>
+        <member name="T:Mash.AppSettings.TypeParser">
+            <summary>
+            Converts a string value to a specified type
+            </summary>
+        </member>
+        <member name="M:Mash.AppSettings.TypeParser.GetTypedValue(System.Type,System.String)">
+            <summary>
+            Parses the supplied value into the specified type
+            </summary>
+            <param name="theType">The data type of the value to parse</param>
+            <param name="value">The value to parse</param>
+            <returns>The parsed type</returns>
+        </member>
+    </members>
+</doc>

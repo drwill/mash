@@ -3,18 +3,19 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <Authors>MASH: David R. Williamson, Sean McIvor, Azad Abbasi</Authors>
     <Company />
     <Copyright>Copyright 2018</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/drwill/mash/tree/master/AppSettings</PackageProjectUrl>
     <PackageIconUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Simple_cog.svg/120px-Simple_cog.svg.png</PackageIconUrl>
-    <RepositoryUrl>https://github.com/drwill/mash/tree/master/AppSettings/AppSettings</RepositoryUrl>
+    <RepositoryUrl>https://github.com/drwill/mash/tree/master/AppSettings/Mash.DevSettings</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <Description>Add-on for Mash.AppSettings to override with dev-specific settings</Description>
     <PackageReleaseNotes>Target .NET Core 2.1</PackageReleaseNotes>
     <PackageTags>application settings loader;app.config;web.config</PackageTags>
+    <PackageId>Mash.AppSettings.DevSettings</PackageId>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

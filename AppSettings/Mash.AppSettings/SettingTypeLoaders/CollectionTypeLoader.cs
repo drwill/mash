@@ -8,7 +8,7 @@ namespace Mash.AppSettings
 {
     internal class CollectionTypeLoader : SettingTypeLoaderBase
     {
-        private static char[] _separators = new[] { ',', ';' };
+        private static readonly char[] _separators = new[] { ',', ';' };
 
         internal override bool DoWork(SettingTypeModel model)
         {

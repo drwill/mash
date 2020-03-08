@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
 
 namespace Mash.AppSettings
 {
@@ -16,8 +16,8 @@ namespace Mash.AppSettings
         /// <param name="pathToJsonSettingsFile">The path to developer's file to load holding developer-specific settings, defaults to CurrentDirectory\%username%.json</param>
         public JsonSettingLoader(string pathToJsonSettingsFile)
         {
-            if (String.IsNullOrEmpty(pathToJsonSettingsFile) ||
-                !File.Exists(pathToJsonSettingsFile))
+            if (String.IsNullOrEmpty(pathToJsonSettingsFile)
+                || !File.Exists(pathToJsonSettingsFile))
             {
                 throw new ArgumentException($"Unable to find file {pathToJsonSettingsFile}", nameof(pathToJsonSettingsFile));
             }
@@ -65,12 +65,12 @@ namespace Mash.AppSettings
 
         private void LoadSettings(string json)
         {
-            _settings = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(json);
+            _settings = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(json);
 
             dynamic connectionStrings;
             if (_settings.TryGetValue("ConnectionStrings", out connectionStrings))
             {
-                _connectionStrings = JsonConvert.DeserializeObject<Dictionary<string, string>>(connectionStrings.ToString());
+                _connectionStrings = JsonSerializer.Deserialize<Dictionary<string, string>>(connectionStrings.ToString());
             }
             else
             {

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -111,12 +111,12 @@ namespace Mash.AppSettings.DevSettings
                 return;
             }
             
-            _devSettings = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(json);
+            _devSettings = JsonSerializer.Deserialize<Dictionary<string, dynamic>>(json);
 
             dynamic connectionStrings;
             if (_devSettings.TryGetValue("ConnectionStrings", out connectionStrings))
             {
-                _connectionStrings = JsonConvert.DeserializeObject<Dictionary<string, string>>(connectionStrings.ToString());
+                _connectionStrings = JsonSerializer.Deserialize<Dictionary<string, string>>(connectionStrings.ToString());
             }
             else
             {

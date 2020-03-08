@@ -1,34 +1,44 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFrameworks>netstandard2.1;netstandard2.0</TargetFrameworks>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.1.1</Version>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>Mash.AppSettings.DevSettings</PackageId>
+    <Version>1.2.0</Version>
+    <Description>Add-on for Mash.AppSettings to override with dev-specific settings</Description>
+    <PackageTags>application settings loader;app.config;web.config</PackageTags>
     <Authors>MASH: David R. Williamson, Sean McIvor, Azad Abbasi</Authors>
     <Company />
-    <Copyright>Copyright 2018</Copyright>
+    <Copyright>Copyright 2020</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/drwill/mash/tree/master/AppSettings</PackageProjectUrl>
-    <PackageIconUrl>https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Simple_cog.svg/120px-Simple_cog.svg.png</PackageIconUrl>
+    <PackageIcon>120px-Simple_cog.svg.png</PackageIcon>
     <RepositoryUrl>https://github.com/drwill/mash/tree/master/AppSettings/Mash.DevSettings</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
-    <Description>Add-on for Mash.AppSettings to override with dev-specific settings</Description>
-    <PackageReleaseNotes>Target .NET Core 2.1</PackageReleaseNotes>
-    <PackageTags>application settings loader;app.config;web.config</PackageTags>
-    <PackageId>Mash.AppSettings.DevSettings</PackageId>
+    <PackageReleaseNotes>Target net standard. Replace Newtonsoft.Json with System.Text.Json.</PackageReleaseNotes>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\common\icons\120px-Simple_cog.svg.png" Pack="true" PackagePath="" />
+  </ItemGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>bin\Release\Mash.DevSettings.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <None Include="bin\Release\netcoreapp2.1\Mash.DevSettings.pdb" Pack="true" PackagePath="lib\netcoreapp2.1" />
+    <None Include="bin\Release\netstandard2.1\Mash.DevSettings.pdb" Pack="true" PackagePath="lib\netstandard2.1" />
+    <None Include="bin\Release\netstandard2.0\Mash.DevSettings.pdb" Pack="true" PackagePath="lib\netstandard2.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
-    <PackageReference Include="Mash.AppSettings" Version="1.1.0" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Text.Json" Version="4.7.1" />
+    <PackageReference Include="Mash.AppSettings" Version="1.2.0" />
   </ItemGroup>
 
   <ItemGroup>

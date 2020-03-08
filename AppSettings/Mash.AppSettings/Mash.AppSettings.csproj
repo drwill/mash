@@ -7,7 +7,10 @@
   </PropertyGroup>
   
   <PropertyGroup>
+    <PackageId>Mash.AppSettings</PackageId>
     <Version>1.2.0</Version>
+    <Description>Loads application settings into your own custom data class</Description>
+    <PackageTags>application settings loader;app.config;web.config</PackageTags>
     <Authors>MASH: David R. Williamson, Sean McIvor, Azad Abbasi</Authors>
     <Company />
     <Copyright>Copyright 2020</Copyright>
@@ -16,9 +19,7 @@
     <PackageIcon>120px-Simple_cog.svg.png</PackageIcon>
     <RepositoryUrl>https://github.com/drwill/mash/tree/master/AppSettings/AppSettings</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
-    <Description>Loads application settings into your own custom data class</Description>
     <PackageReleaseNotes>Target net standard. Replace Newtonsoft.Json with System.Text.Json.</PackageReleaseNotes>
-    <PackageTags>application settings loader;app.config;web.config</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

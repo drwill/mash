@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.1;netstandard2.0;netstandard1.3</TargetFrameworks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>Mash.Logging</PackageId>
+    <Version>1.0.0-preview</Version>
+    <Description>Provides logging abstraction and multi-destination routing.</Description>
+    <PackageTags>log;logs;logging;tracing</PackageTags>
+    <Authors>David R. Williamson</Authors>
+    <Company />
+    <Copyright>Copyright 2020</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/drwill/mash/tree/master/Logging</PackageProjectUrl>
+    <PackageIcon>120px-Simple_cog.svg.png</PackageIcon>
+    <RepositoryUrl>https://github.com/drwill/mash/tree/master/Logging</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageReleaseNotes>Initial release.</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\common\icons\120px-Simple_cog.svg.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bin\$(Configuration)\netstandard2.1\Mash.Logging.pdb" Pack="true" PackagePath="lib\netstandard2.1" />
+    <None Include="bin\$(Configuration)\netstandard2.0\Mash.Logging.pdb" Pack="true" PackagePath="lib\netstandard2.0" />
+    <None Include="bin\$(Configuration)\netstandard1.3\Mash.Logging.pdb" Pack="true" PackagePath="lib\netstandard1.3" />
+  </ItemGroup>
+
+</Project>

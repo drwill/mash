@@ -18,30 +18,30 @@ This will prevent code changes of how you load settings from impacting the rest 
 
 Your settings class can look as simple as this:
 
-	class MySettings : SingletonSettings<MySettings>
-	{
-		[AppSetting]
-		public int MyIntValue { get; set; }
+```csharp
+class MySettings : SingletonSettings<MySettings>
+{
+    [AppSetting]
+    public int MyIntValue { get; set; }
 
-		[AppSetting(Key = "StringSettingOverride")]
-		public string OverridenSetting { get; set; }
+    [AppSetting(Key = "StringSettingOverride")]
+    public string OverridenSetting { get; set; }
 
-		[AppSetting(Optional = true)]
-		public string OptionalSetting { get; set; }
+    [AppSetting(Optional = true)]
+    public string OptionalSetting { get; set; }
 
-		[AppSetting(SettingType = SettingType.ConnectionString)]
-		public string SpecificConnectionStringToLoadByKey { get; set; }
+    [AppSetting(SettingType = SettingType.ConnectionString)]
+    public string SpecificConnectionStringToLoadByKey { get; set; }
 
-		[AppSetting(SettingType = SettingType.ConnectionString)]
-		public IReadOnlyDictionary<string, string> ConnectionStrings { get; set; }
+    [AppSetting(SettingType = SettingType.ConnectionString)]
+    public IReadOnlyDictionary<string, string> ConnectionStrings { get; set; }
 
-		[AppSetting]
-		public IList<int> ListOfIntegers { get; set; }
-	}
+    [AppSetting]
+    public IList<int> ListOfIntegers { get; set; }
+}
+```
 
-And you can access your code like this:
-
-	var numbers = Settings.Instance.ListOfIntegers;
+And you can access your code like `var numbers = Settings.Instance.ListOfIntegers;`.
 
 Or if you want to opt-in all public properties, you can just decorate the class with the AppSetting attribute.
 
@@ -49,8 +49,10 @@ Or if you want to opt-in all public properties, you can just decorate the class 
 
 If you wish to load the settings by hand, the initialization could would look like:
 
-	var settings = new MySettings();
-	AppSettingsLoader.Load(AppSettingsFactory.GetAppConfigSettingLoader(), ref settings);
+```csharp
+var settings = new MySettings();
+AppSettingsLoader.Load(AppSettingsFactory.GetAppConfigSettingLoader(), ref settings);
+```
 
 ## Local debug dev settings
 

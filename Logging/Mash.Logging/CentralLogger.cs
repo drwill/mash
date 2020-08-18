@@ -94,7 +94,8 @@ namespace Mash.Logging
         private IDictionary<string, string> MergeProperties(IDictionary<string, string> extraProperties)
         {
             // Small optimization
-            if (!extraProperties.Any())
+            if (extraProperties == null
+                || !extraProperties.Any())
             {
                 return _appContext;
             }

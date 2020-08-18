@@ -8,7 +8,7 @@
 
   <PropertyGroup>
     <PackageId>Mash.Logging</PackageId>
-    <Version>1.0.0-preview</Version>
+    <Version>1.0.1-preview</Version>
     <Description>Provides logging abstraction and multi-destination routing.</Description>
     <PackageTags>log;logs;logging;tracing</PackageTags>
     <Authors>David R. Williamson</Authors>

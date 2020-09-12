@@ -81,21 +81,19 @@ namespace Mash.Logging
 
         private string BuildConsoleText(string message, IDictionary<string, string> context)
         {
-            string content = message;
-
-            if (context.Any())
+            if (!ShouldLogContext || !context.Any())
             {
-                var sb = new StringBuilder(message);
-                sb.AppendLine();
-                foreach (KeyValuePair<string, string> kvp in context)
-                {
-                    sb.AppendLine($"\t{kvp.Key}: {kvp.Value}");
-                }
-
-                content = sb.ToString();
+                return message;
             }
 
-            return content;
+            var sb = new StringBuilder(message);
+            sb.AppendLine();
+            foreach (KeyValuePair<string, string> kvp in context)
+            {
+                sb.AppendLine($"\t{kvp.Key}: {kvp.Value}");
+            }
+
+            return sb.ToString();
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Sample
             var loggingBuilder = new LoggingBuilder();
             loggingBuilder.AppContext.Add("Host", Environment.MachineName);
             loggingBuilder.LogProviders.Add(new ConsoleLogProvider { ShouldLogContext = true });
-            
+
             var logger = loggingBuilder.BuildLogger();
             logger.LoggerContext.Add("Operation", "Sample");
 

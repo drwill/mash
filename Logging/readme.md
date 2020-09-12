@@ -44,3 +44,9 @@ Modifications to that logger's context will not affect the current one.
 ## Logging providers
 
 This utility includes a console logger, and you can build your own adapters to other destinations.
+
+## Changelog
+
+### 2020/09/12 - 1.0.2-preview
+
+Fixed bug where `ConsoleLogProvider.ShouldLogContext` was ignored.

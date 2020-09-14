@@ -1,6 +1,8 @@
 ﻿using Mash.Logging;
+using Mash.Logging.ApplicationInsights;
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Sample
 {

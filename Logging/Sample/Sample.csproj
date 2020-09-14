@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Mash.Logging.ApplicationInsights\Mash.Logging.ApplicationInsights.csproj" />
     <ProjectReference Include="..\Mash.Logging\Mash.Logging.csproj" />
   </ItemGroup>
 

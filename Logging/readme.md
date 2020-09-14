@@ -47,6 +47,12 @@ This utility includes a console logger, and you can build your own adapters to o
 
 ## Changelog
 
-### 2020/09/12 - 1.0.2-preview
+### 2020/09/12
+
+#### Mash.Logging 1.0.2-preview
 
 Fixed bug where `ConsoleLogProvider.ShouldLogContext` was ignored.
+
+#### Mash.Logging.ApplicationInsights 1.0.1-preview
+
+Added a persistence channel to enable sending of telemetry after coming back online.
